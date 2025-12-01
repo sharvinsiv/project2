@@ -1,23 +1,25 @@
 {
-  "name": "project2",
+  "name": "project-2",
   "version": "0.0.0",
-  "description": "Project 2",
+  "description": "Project 2 - Soccer Team  Application",
   "license": "Apache-2.0",
   "author": {
-    "name": "sharvinsiv"
+    "name": "Sharvin Sivarajah"
   },
   "keywords": [
     "webcomponents",
     "lit",
-    "haxtheweb"
+    "haxtheweb",
+    "hockey",
+    "network"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/sharvinsiv/project2"
   },
   "type": "module",
-  "main": "project2.js",
-  "module": "project2.js",
+  "main": "src/project-2.js",
+  "module": "src/project-2.js",
   "scripts": {
     "start": "web-dev-server",
     "build": "rimraf public && rollup -c rollup.config.js && npm run analyze",
@@ -48,6 +50,7 @@
     "babel-plugin-transform-dynamic-import": "^2.1.0",
     "commit-and-tag-version": "12.5.1",
     "rimraf": "^5.0.7",
+    "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-esbuild": "6.2.1"
   },
   "private": false,
@@ -59,4 +62,3 @@
   },
   "customElements": "custom-elements.json"
 }
-
