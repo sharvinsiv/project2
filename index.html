@@ -5,10 +5,59 @@
   <base href="/">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="Description" content="Demonstration for project-2">
+  <meta name="Description" content="Happy Volley FC - Youth Sports Team Website">
 
-  <title>project-2</title>
+  <style>
+    :root, html, body {
+      margin: var(--ddd-spacing-0);
+      padding: var(--ddd-spacing-0);
+    }
+  </style>
+  <title>Happy Volley FC</title>
 </head>
-    <project-1></project-1>
-  <script type="module" src="./project-2.js"></script>
+
+<body>
+
+  <project-app></project-app>
+
+  <script type="module" src="./src/project-2.js"></script>
+
+
+  <style>
+    #follow-the-white-rabbit {
+      margin: var(--ddd-spacing-4) auto var(--ddd-spacing-16) var(--ddd-spacing-4);
+      background-color: var(--ddd-accent-4);
+      color: var(--ddd-theme-default-coalyGray);
+    }
+    #follow-the-white-rabbit[open] summary {
+      background-color: var(--ddd-accent-4) !important;
+      color: var(--ddd-theme-default-coalyGray);
+    }
+    #follow-the-white-rabbit[open] .content {
+      padding: var(--ddd-spacing-0) var(--ddd-spacing-4);
+    }
+    #follow-the-white-rabbit ul,
+    #follow-the-white-rabbit li {
+      padding: var(--ddd-spacing-0);
+      margin: var(--ddd-spacing-0);
+    }
+    #follow-the-white-rabbit li {
+      font-size: var(--ddd-font-size-xs);
+      list-style: none;
+    }
+    #follow-the-white-rabbit li strong,
+    #follow-the-white-rabbit li a {
+      padding: var(--ddd-spacing-2) var(--ddd-spacing-4);
+      color: var(--ddd-theme-default-coalyGray);
+      display: block;
+      font-weight: var(--ddd-font-weight-bold);
+    }
+    #follow-the-white-rabbit li:focus-within a,
+    #follow-the-white-rabbit li:hover a {
+      background-color: var(--ddd-theme-default-coalyGray);
+      color: var(--ddd-theme-default-globalNeon);
+    }
+  </style>
+
+</body>
 </html>
