@@ -27,7 +27,7 @@ export class ProjectHome extends DDDSuper(LitElement) {
     return html`
       <div class="hero">
         <h2>Welcome to Happy Volley FC!</h2>
-        <p>Youth Volleyball Excellence • Teamwork • Sportsmanship</p>
+        <p>Youth Soccer Excellence • Teamwork • Sportsmanship</p>
       </div>
     `;
   }
