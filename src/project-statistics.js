@@ -26,9 +26,9 @@ export class ProjectStats extends DDDSuper(LitElement) {
     return html`
       <h2>Team Stats</h2>
 
-      <div class="stat">Serving Accuracy: <strong>87%</strong></div>
-      <div class="stat">Blocks Per Set: <strong>3.2</strong></div>
-      <div class="stat">Aces Per Match: <strong>5.1</strong></div>
+      <div class="stat">Shot Accuracy: <strong>87%</strong></div>
+      <div class="stat">Clean Sheets: <strong>3</strong></div>
+      <div class="stat">Average Passes per Match <strong>5.1</strong></div>
     `;
   }
 }
