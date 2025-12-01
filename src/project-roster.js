@@ -27,10 +27,10 @@ export class ProjectRoster extends DDDSuper(LitElement) {
     return html`
       <h2>Team Roster</h2>
 
-      <div class="card"><strong>Ava Thompson</strong> — Setter</div>
-      <div class="card"><strong>Chloe Martinez</strong> — Outside Hitter</div>
-      <div class="card"><strong>Layla Brooks</strong> — Middle Blocker</div>
-      <div class="card"><strong>Riley Chen</strong> — Libero</div>
+      <div class="card"><strong>Ava Thompson</strong> — Goalkeeper</div>
+      <div class="card"><strong>Chloe Martinez</strong> — Left Back</div>
+      <div class="card"><strong>Layla Brooks</strong> — Defensive Midfielder</div>
+      <div class="card"><strong>Riley Chen</strong> — Left Winger</div>
     `;
   }
 }
