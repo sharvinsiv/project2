@@ -1,61 +1,73 @@
-{
-  "name": "project2",
-  "version": "0.0.0",
-  "description": "Project 2",
-  "license": "Apache-2.0",
-  "author": {
-    "name": "sharvinsiv"
+import nodeResolve from '@rollup/plugin-node-resolve';
+import babel from '@rollup/plugin-babel';
+import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
+import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
+import esbuild from 'rollup-plugin-esbuild';
+import pkg from 'rollup-plugin-copy';
+const copy = pkg;
+
+export default {
+  // Your app still uses index.html as the entry point
+  input: 'index.html',
+
+  output: {
+    entryFileNames: '[hash].js',
+    chunkFileNames: '[hash].js',
+    assetFileNames: '[hash][extname]',
+    format: 'es',
+    dir: 'public',   // Output folder stays the same
   },
-  "keywords": [
-    "webcomponents",
-    "lit",
-    "haxtheweb"
+
+  preserveEntrySignatures: false,
+
+  plugins: [
+    /** Enable using HTML as rollup entrypoint */
+    html({
+      minify: true,
+    }),
+
+    /** Copies assets folder → public/assets */
+    copy({
+      targets: [
+        {
+          src: 'assets',
+          dest: 'public/',
+          flatten: false,
+        },
+      ],
+    }),
+
+    /** Resolve bare module imports for Lit, DDDSuper, etc */
+    nodeResolve(),
+
+    /** Compile + minify JS */
+    esbuild({
+      minify: true,
+      target: ['chrome64', 'firefox67', 'safari11.1'],
+    }),
+
+    /** Bundle assets referenced via import.meta.url */
+    importMetaAssets(),
+
+    /** Minify Lit HTML & CSS tagged templates */
+    babel({
+      plugins: [
+        [
+          'babel-plugin-template-html-minifier',
+          {
+            modules: { lit: ['html', { name: 'css', encapsulation: 'style' }] },
+            failOnError: false,
+            strictCSS: true,
+            htmlMinifier: {
+              collapseWhitespace: true,
+              conservativeCollapse: true,
+              removeComments: true,
+              caseSensitive: true,
+              minifyCSS: true,
+            },
+          },
+        ],
+      ],
+    }),
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sharvinsiv/project2"
-  },
-  "type": "module",
-  "main": "src/project-2.js",
-  "module": "src/project-2.js",
-  "scripts": {
-    "start": "web-dev-server",
-    "build": "rimraf public && rollup -c rollup.config.js && npm run analyze",
-    "analyze": "cem analyze --litelement --exclude public",
-    "dddaudit": "hax audit",
-    "release": "npm run build && commit-and-tag-version && git push --follow-tags origin main && npm publish",
-    "test": "web-test-runner test/**/*.test.js --coverage --node-resolve",
-    "test:watch": "web-test-runner test/**/*.test.js --node-resolve --watch"
-  },
-  "dependencies": {
-    "lit": "3.3.1",
-    "@haxtheweb/d-d-d": "^11.0.5",
-    "@haxtheweb/i18n-manager": "^11.0.0"
-  },
-  "devDependencies": {
-    "@babel/preset-env": "^7.16.4",
-    "@custom-elements-manifest/analyzer": "0.10.4",
-    "@open-wc/building-rollup": "^3.0.2",
-    "@open-wc/testing": "4.0.0",
-    "@rollup/plugin-babel": "6.0.4",
-    "@rollup/plugin-node-resolve": "16.0.1",
-    "@rollup/plugin-terser": "^0.4.4",
-    "@web/dev-server": "0.4.6",
-    "@web/rollup-plugin-html": "^2.3.0",
-    "@web/rollup-plugin-import-meta-assets": "2.3.0",
-    "@web/test-runner": "^0.19.0",
-    "babel-plugin-template-html-minifier": "^4.1.0",
-    "babel-plugin-transform-dynamic-import": "^2.1.0",
-    "commit-and-tag-version": "12.5.1",
-    "rimraf": "^5.0.7",
-    "rollup-plugin-esbuild": "6.2.1"
-  },
-  "private": false,
-  "publishConfig": {
-    "access": "public"
-  },
-  "hax": {
-    "cli": true
-  },
-  "customElements": "custom-elements.json"
-}
+};
