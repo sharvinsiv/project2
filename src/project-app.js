@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Junyu Zhao
+ * Copyright 2025 sharvinsiv
  * @license Apache-2.0, see LICENSE for full text.
  */
 import { LitElement, html, css } from "lit";
@@ -12,13 +12,6 @@ import "./project-stats.js";
 import "./project-standings.js";
 import "./project-footer.js";
 
-/**
- * `project-app`
- * Main application container with routing for Happy Volley FC
- * 
- * @demo index.html
- * @element project-app
- */
 export class ProjectApp extends DDDSuper(LitElement) {
 
   static get tag() {
