@@ -19,47 +19,27 @@ export class ProjectFooter extends DDDSuper(LitElement) {
   static get properties() {
     return {
       ...super.properties,
-      year: { type: Number }
+      year: { type: Number },
     };
   }
 
   static get styles() {
-    return [super.styles,
-    css`
+    return [super.styles, css`
       :host {
         display: block;
-        background: linear-gradient(90deg, #0b6b34 0%, #1e9b48 100%);
+        background: linear-gradient(90deg, var(--pv-dark), var(--pv-primary));
         color: #fff;
         margin-top: 32px;
       }
       .footer-wrapper {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 24px;
         text-align: center;
       }
-      .footer-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-      .social-links {
-        display: flex;
-        gap: 12px;
-      }
-      .social-link {
-        color: #fff;
+      a {
+        color: var(--pv-accent);
         text-decoration: none;
-        font-size: 14px;
-        transition: opacity 0.2s ease;
-      }
-      .social-link:hover {
-        opacity: 0.85;
-      }
-      .copyright {
-        font-size: 13px;
       }
     `];
   }
@@ -67,23 +47,11 @@ export class ProjectFooter extends DDDSuper(LitElement) {
   render() {
     return html`
       <div class="footer-wrapper">
-        <div class="footer-content">
-          <div class="copyright">
-            © ${this.year} Happy Volley FC. All rights reserved.
-          </div>
-          <div class="social-links">
-            <a href="#" class="social-link">Facebook</a>
-            <a href="#" class="social-link">Instagram</a>
-            <a href="#" class="social-link">Twitter</a>
-          </div>
-        </div>
+        <p>© ${this.year} Happy Volley FC — All Rights Reserved</p>
+        <p>Built with Lit + DDDSuper</p>
       </div>
     `;
   }
-
-  static get haxProperties() {
-    return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url).href;
-  }
 }
 
-globalThis.customElements.define(ProjectFooter.tag, ProjectFooter);
+customElements.define(ProjectFooter.tag, ProjectFooter);
