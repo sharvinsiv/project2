@@ -12,74 +12,40 @@ export class ProjectHeader extends DDDSuper(LitElement) {
     return "project-header";
   }
 
-  constructor() {
-    super();
-    this.currentRoute = "/";
-    this.navItems = [
-      { path: "/", label: "Home" },
-      { path: "/schedule", label: "Schedule" },
-      { path: "/team", label: "Team" },
-      { path: "/stats", label: "Stats" },
-      { path: "/standings", label: "Standings" }
-    ];
-  }
-
   static get properties() {
     return {
       ...super.properties,
-      currentRoute: { type: String },
-      navItems: { type: Array }
+      currentRoute: { type: String }
     };
   }
 
   static get styles() {
-    return [super.styles,
-    css`
-      :host {
-        display: block;
-        background: var(--pv-primary, #1e9b48);
-        color: #fff;
-        box-shadow: 0 4px 18px rgba(11,107,52,0.12);
-      }
-      .header-wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px 24px;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .logo {
-        font-size: 20px;
-        font-weight: 700;
-        color: #fff;
-        letter-spacing: 0.6px;
+    return [super.styles, css`
+      header {
+        background: var(--pv-primary);
+        color: white;
+        padding: 20px;
       }
       nav {
         display: flex;
-        gap: 12px;
+        gap: 24px;
+        font-size: 18px;
       }
-      .nav-link {
+      .link {
+        cursor: pointer;
+        color: white;
         text-decoration: none;
-        color: rgba(255,255,255,0.95);
-        padding: 8px 12px;
-        border-radius: 6px;
-        transition: background-color 0.18s ease;
-        font-weight: 600;
+        font-weight: bold;
       }
-      .nav-link:hover {
-        background: rgba(255,255,255,0.12);
-      }
-      .nav-link.active {
-        background: #fff;
-        color: var(--pv-primary, #1e9b48);
+      .active {
+        text-decoration: underline;
+        color: var(--pv-accent);
       }
     `];
   }
 
-  handleClick(e, path) {
-    e.preventDefault();
-    this.dispatchEvent(new CustomEvent('navigate', {
+  navigate(path) {
+    this.dispatchEvent(new CustomEvent("navigate", {
       detail: { path },
       bubbles: true,
       composed: true
@@ -88,25 +54,27 @@ export class ProjectHeader extends DDDSuper(LitElement) {
 
   render() {
     return html`
-      <div class="header-wrapper">
-        <div class="logo"> Happy Volley FC</div>
+      <header>
+        <h1>Happy Volley FC</h1>
         <nav>
-          ${this.navItems.map(item => html`
-            <a 
-              href="${item.path}"
-              class="nav-link ${this.currentRoute === item.path ? 'active' : ''}"
-              @click="${(e) => this.handleClick(e, item.path)}">
-              ${item.label}
-            </a>
-          `)}
-        </nav>
-      </div>
-    `;
-  }
+          <span class="link ${this.currentRoute === '/' ? 'active' : ''}"
+                @click="${() => this.navigate('/')}">Home</span>
 
-  static get haxProperties() {
-    return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url).href;
+          <span class="link ${this.currentRoute === '/schedule' ? 'active' : ''}"
+                @click="${() => this.navigate('/schedule')}">Schedule</span>
+
+          <span class="link ${this.currentRoute === '/team' ? 'active' : ''}"
+                @click="${() => this.navigate('/team')}">Roster</span>
+
+          <span class="link ${this.currentRoute === '/stats' ? 'active' : ''}"
+                @click="${() => this.navigate('/stats')}">Stats</span>
+
+          <span class="link ${this.currentRoute === '/standings' ? 'active' : ''}"
+                @click="${() => this.navigate('/standings')}">Standings</span>
+        </nav>
+      </header>
+    `;
   }
 }
 
-globalThis.customElements.define(ProjectHeader.tag, ProjectHeader);
+customElements.define(ProjectHeader.tag, ProjectHeader);
