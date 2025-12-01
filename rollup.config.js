@@ -16,10 +16,8 @@
     "url": "https://github.com/sharvinsiv/project2"
   },
   "type": "module",
-
-  "main": "index.html",
-  "module": "index.html",
-
+  "main": "src/project-2.js",
+  "module": "src/project-2.js",
   "scripts": {
     "start": "web-dev-server",
     "build": "rimraf public && rollup -c rollup.config.js && npm run analyze",
