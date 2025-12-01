@@ -32,13 +32,12 @@ export class ProjectApp extends DDDSuper(LitElement) {
   }
 
   static get styles() {
-    return [super.styles,
-    css`
+    return [super.styles, css`
       :host {
         display: block;
         min-height: 100vh;
         background: linear-gradient(180deg, #f6fff6 0%, #e9f8ea 100%);
-        --pv-primary: #1e9b48; /* team green */
+        --pv-primary: #1e9b48;
         --pv-dark: #0b6b34;
         --pv-accent: #ff7a18;
         --pv-surface: #ffffff;
@@ -57,12 +56,10 @@ export class ProjectApp extends DDDSuper(LitElement) {
   }
 
   initRouting() {
-    // Handle initial page load
     this.route = window.location.pathname;
-    
-    // Handle browser back/forward
-    window.addEventListener('popstate', () => {
+    window.addEventListener("popstate", () => {
       this.route = window.location.pathname;
+      this.requestUpdate();
     });
   }
 
@@ -70,18 +67,19 @@ export class ProjectApp extends DDDSuper(LitElement) {
     if (e.detail && e.detail.path) {
       this.route = e.detail.path;
       window.history.pushState({}, "", e.detail.path);
+      this.requestUpdate();
     }
   }
 
   renderPage() {
-    switch(this.route) {
-      case '/schedule':
+    switch (this.route) {
+      case "/schedule":
         return html`<project-schedule></project-schedule>`;
-      case '/team':
+      case "/team":
         return html`<project-roster></project-roster>`;
-      case '/stats':
+      case "/stats":
         return html`<project-stats></project-stats>`;
-      case '/standings':
+      case "/standings":
         return html`<project-standings></project-standings>`;
       default:
         return html`<project-home></project-home>`;
@@ -91,21 +89,19 @@ export class ProjectApp extends DDDSuper(LitElement) {
   render() {
     return html`
       <div class="app-container">
-        <project-header 
+        <project-header
           .currentRoute="${this.route}"
           @navigate="${this.handleNavigation}">
         </project-header>
+
         <div class="content">
           ${this.renderPage()}
         </div>
+
         <project-footer></project-footer>
       </div>
     `;
   }
-
-  static get haxProperties() {
-    return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url).href;
-  }
 }
 
-globalThis.customElements.define(ProjectApp.tag, ProjectApp);
+customElements.define(ProjectApp.tag, ProjectApp);
