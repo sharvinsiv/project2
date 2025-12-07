@@ -7,7 +7,6 @@ import pkg from 'rollup-plugin-copy';
 const copy = pkg;
 
 export default {
-  // Your app still uses index.html as the entry point
   input: 'index.html',
 
   output: {
@@ -15,18 +14,16 @@ export default {
     chunkFileNames: '[hash].js',
     assetFileNames: '[hash][extname]',
     format: 'es',
-    dir: 'public',   // Output folder stays the same
+    dir: 'public',
   },
 
   preserveEntrySignatures: false,
 
   plugins: [
-    /** Enable using HTML as rollup entrypoint */
     html({
       minify: true,
     }),
 
-    /** Copies assets folder → public/assets */
     copy({
       targets: [
         {
@@ -37,19 +34,15 @@ export default {
       ],
     }),
 
-    /** Resolve bare module imports for Lit, DDDSuper, etc */
     nodeResolve(),
 
-    /** Compile + minify JS */
     esbuild({
       minify: true,
       target: ['chrome64', 'firefox67', 'safari11.1'],
     }),
 
-    /** Bundle assets referenced via import.meta.url */
     importMetaAssets(),
 
-    /** Minify Lit HTML & CSS tagged templates */
     babel({
       plugins: [
         [
