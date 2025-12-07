@@ -4,18 +4,17 @@
  */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-import "./project-header.js";
-import "./project-home.js";
-import "./project-schedule.js";
-import "./project-roster.js";
-import "./project-stats.js";
-import "./project-standings.js";
-import "./project-footer.js";
+import "./project2-header.js";
+import "./project2-home.js";
+import "./project2-schedule.js";
+import "./project2-roster.js";
+import "./project2-stats.js";
+import "./project2-standings.js";
+import "./project2-footer.js";
 
-export class ProjectApp extends DDDSuper(LitElement) {
-
+export class Project2App extends DDDSuper(LitElement) {
   static get tag() {
-    return "project-app";
+    return "project2-app";
   }
 
   constructor() {
@@ -36,12 +35,7 @@ export class ProjectApp extends DDDSuper(LitElement) {
       :host {
         display: block;
         min-height: 100vh;
-        background: linear-gradient(180deg, #f6fff6 0%, #e9f8ea 100%);
-        --pv-primary: #1e9b48;
-        --pv-dark: #0b6b34;
-        --pv-accent: #ff7a18;
-        --pv-surface: #ffffff;
-        --pv-muted: #617b68;
+        background-color: #f4f9f6;
       }
       .app-container {
         display: flex;
@@ -50,7 +44,7 @@ export class ProjectApp extends DDDSuper(LitElement) {
       }
       .content {
         flex: 1;
-        padding: 24px;
+        padding: var(--ddd-spacing-4);
       }
     `];
   }
@@ -59,49 +53,38 @@ export class ProjectApp extends DDDSuper(LitElement) {
     this.route = window.location.pathname;
     window.addEventListener("popstate", () => {
       this.route = window.location.pathname;
-      this.requestUpdate();
     });
   }
 
   handleNavigation(e) {
-    if (e.detail && e.detail.path) {
+    if (e.detail?.path) {
       this.route = e.detail.path;
       window.history.pushState({}, "", e.detail.path);
-      this.requestUpdate();
     }
   }
 
   renderPage() {
     switch (this.route) {
-      case "/schedule":
-        return html`<project-schedule></project-schedule>`;
-      case "/team":
-        return html`<project-roster></project-roster>`;
-      case "/stats":
-        return html`<project-stats></project-stats>`;
-      case "/standings":
-        return html`<project-standings></project-standings>`;
-      default:
-        return html`<project-home></project-home>`;
+      case "/schedule": return html`<project2-schedule></project2-schedule>`;
+      case "/roster": return html`<project2-roster></project2-roster>`;
+      case "/stats": return html`<project2-stats></project2-stats>`;
+      case "/standings": return html`<project2-standings></project2-standings>`;
+      default: return html`<project2-home></project2-home>`;
     }
   }
 
   render() {
     return html`
       <div class="app-container">
-        <project-header
+        <project2-header
           .currentRoute="${this.route}"
           @navigate="${this.handleNavigation}">
-        </project-header>
-
-        <div class="content">
-          ${this.renderPage()}
-        </div>
-
-        <project-footer></project-footer>
+        </project2-header>
+        <div class="content">${this.renderPage()}</div>
+        <project2-footer></project2-footer>
       </div>
     `;
   }
 }
 
-customElements.define(ProjectApp.tag, ProjectApp);
+customElements.define(Project2App.tag, Project2App);
