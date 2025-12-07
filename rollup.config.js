@@ -7,7 +7,8 @@ import pkg from 'rollup-plugin-copy';
 const copy = pkg;
 
 export default {
-  input: 'index.html',
+
+  input: 'src/project2-app.js',
 
   output: {
     entryFileNames: '[hash].js',
@@ -44,6 +45,8 @@ export default {
     importMetaAssets(),
 
     babel({
+      babelHelpers: 'bundled',
+      extensions: ['.js', '.ts', '.mjs'],
       plugins: [
         [
           'babel-plugin-template-html-minifier',
