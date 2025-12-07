@@ -1,7 +1,7 @@
 {
   "name": "project-2",
   "version": "0.0.0",
-  "description": "Project 2 - Soccer Team  Application",
+  "description": "Project 2 - Soccer Team Application",
   "license": "Apache-2.0",
   "author": {
     "name": "Sharvin Sivarajah"
@@ -10,7 +10,7 @@
     "webcomponents",
     "lit",
     "haxtheweb",
-    "hockey",
+    "soccer",
     "network"
   ],
   "repository": {
@@ -18,8 +18,8 @@
     "url": "https://github.com/sharvinsiv/project2"
   },
   "type": "module",
-  "main": "src/project-2.js",
-  "module": "src/project-2.js",
+  "main": "src/project2-app.js",
+  "module": "src/project2-app.js",
   "scripts": {
     "start": "web-dev-server",
     "build": "rimraf public && rollup -c rollup.config.js && npm run analyze",
