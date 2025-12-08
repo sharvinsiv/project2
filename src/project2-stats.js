@@ -6,42 +6,61 @@ import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
 export class Project2Stats extends DDDSuper(LitElement) {
+
   static get tag() { return "project2-stats"; }
 
   constructor() {
     super();
-    this.wins = 8;
-    this.losses = 2;
-    this.ties = 1;
-    this.goalsFor = 21;
-    this.goalsAgainst = 10;
+    this.stats = [
+      { player: "John Smith", goals: 12, assists: 8, points: 20 },
+      { player: "Sarah Johnson", goals: 9, assists: 14, points: 23 },
+      { player: "Mike Wilson", goals: 0, assists: 2, points: 2 }
+    ];
   }
 
-  static styles = [
-    super.styles,
-    css`
+  static get properties() { return { ...super.properties, stats: { type: Array } }; }
+
+  static get styles() {
+    return [super.styles, css`
       :host { display: block; }
-      .container { max-width: 1200px; margin: auto; }
-      h1 { color: var(--ddd-theme-default-navy80); margin-bottom: var(--ddd-spacing-4); }
-      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--ddd-spacing-4); }
-      .card { background: var(--ddd-theme-default-skyBlue); border-radius: var(--ddd-radius-md); padding: var(--ddd-spacing-4); text-align: center; box-shadow: var(--ddd-boxShadow-sm); }
-      .value { font-size: var(--ddd-font-size-3xl); font-weight: bold; color: var(--ddd-theme-default-navy80); }
-      .label { font-size: var(--ddd-font-size-m); margin-top: var(--ddd-spacing-2); color: var(--ddd-theme-default-coalyGray); }
-    `
-  ];
+      .stats-container { max-width: 800px; margin: 0 auto; padding: 16px; }
+      h1 { color: #1b5e20; font-size: 32px; margin-bottom: 16px; }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        color: #1b5e20;
+      }
+      th, td { padding: 12px; text-align: left; border-bottom: 1px solid #1b5e20; }
+      th { background-color: #81c784; color: #000000; }
+      tr:hover { background-color: #c8e6c9; }
+    `];
+  }
 
   render() {
     return html`
-      <div class="container">
-        <h1>Team Statistics</h1>
-        <div class="grid">
-          ${["Wins","Losses","Ties","Goals For","Goals Against"].map((label,i) => html`
-            <div class="card">
-              <div class="value">${[this.wins,this.losses,this.ties,this.goalsFor,this.goalsAgainst][i]}</div>
-              <div class="label">${label}</div>
-            </div>
-          `)}
-        </div>
+      <div class="stats-container">
+        <h1>Player Stats</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Goals</th>
+              <th>Assists</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${this.stats.map(player => html`
+              <tr>
+                <td>${player.player}</td>
+                <td>${player.goals}</td>
+                <td>${player.assists}</td>
+                <td>${player.points}</td>
+              </tr>
+            `)}
+          </tbody>
+        </table>
       </div>
     `;
   }
