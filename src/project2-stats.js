@@ -12,9 +12,9 @@ export class Project2Stats extends DDDSuper(LitElement) {
   constructor() {
     super();
     this.stats = [
-      { player: "John Smith", goals: 12, assists: 8, points: 20 },
-      { player: "Sarah Johnson", goals: 9, assists: 14, points: 23 },
-      { player: "Mike Wilson", goals: 0, assists: 2, points: 2 }
+      { player: "Alexander Moreno", goals: 52, assists: 0 },
+      { player: "Djed Spence", goals:0 , assists: 11 },
+      { player: "Rodrigo Bentancur", goals: 3, assists: 3 }
     ];
   }
 
