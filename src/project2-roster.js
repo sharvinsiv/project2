@@ -16,7 +16,15 @@ export class Project2Roster extends DDDSuper(LitElement) {
       { name: "Kazaiah Sterling", number: "9", position: "Left Back" },
       { name: "Dejan Kulusevski", number: "20", position: "Right Wing" },
       { name: "Djed SPence", number: "3", position: "Right Back" },
-      { name: "Rodrigo Bentancur", number: "8", position: "Central Midfielder" }
+      { name: "Rodrigo Bentancur", number: "8", position: "Central Midfielder" },
+      { name: "Harry Kane", number: "9", position: "Striker" },
+      { name: "Hugo Lloris", number: "1", position: "Goalkeeper" },
+      { name: "Cristian Romero", number: "15", position: "Centre Back" },
+      { name: "Radu Dragusin", number: "5", position: "Centre Back" },
+      { name: "Destiny Udogie", number: "2", position: "Left Back" },
+      { name: "Papa Mate Sarr", number: "17", position: "Central Defensive Midfielder" },
+      { name: "Xavi Simons", number: "10", position: "Central Attacking Midfielder" }
+    
     ];
   }
 
