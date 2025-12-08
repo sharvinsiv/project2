@@ -6,8 +6,7 @@ import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
 export class Project2PlayerCard extends DDDSuper(LitElement) {
-
-  static get tag() { return "project2-player-card"; }
+  static get tag() { return "p2-player-card"; }
 
   constructor() {
     super();
@@ -17,37 +16,35 @@ export class Project2PlayerCard extends DDDSuper(LitElement) {
   }
 
   static get properties() {
-    return { ...super.properties, name: { type:String }, number: { type:String }, position: { type:String } };
+    return { ...super.properties,
+      name: { type: String },
+      number: { type: String },
+      position: { type: String }
+    };
   }
 
   static get styles() {
     return [super.styles, css`
-      :host { display:block; }
-      .card {
-        background: linear-gradient(135deg,#fbbf24,#f87171);
-        color:#1e40af;
-        border-radius:0.75rem;
-        padding:1rem;
-        text-align:center;
-        box-shadow:0 2px 4px rgba(0,0,0,0.1);
-        transition: transform 0.2s ease;
-      }
-      .card:hover { transform:scale(1.05); }
-      .jersey-number { font-size:2rem; font-weight:bold; margin-bottom:0.5rem; }
-      .player-name { font-size:1.2rem; font-weight:500; margin-bottom:0.25rem; }
-      .position { font-size:1rem; opacity:0.8; }
+      :host { display: block; }
+      .card { background: linear-gradient(135deg,#004d40,#26a69a); color: white; text-align: center; padding: 16px; border-radius: 12px; transition: transform 0.2s; }
+      .card:hover { transform: scale(1.05); }
+      .number { font-size: 2.5rem; font-weight: bold; margin-bottom: 4px; }
+      .name { font-weight: 500; font-size: 1.1rem; margin-bottom: 2px; }
+      .position { opacity: 0.9; font-size: 0.95rem; }
     `];
   }
 
   render() {
     return html`
       <div class="card">
-        <div class="jersey-number">#${this.number}</div>
-        <div class="player-name">${this.name}</div>
+        <div class="number">#${this.number}</div>
+        <div class="name">${this.name}</div>
         <div class="position">${this.position}</div>
       </div>
     `;
   }
+
+  static get haxProperties() { return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url).href; }
 }
 
-globalThis.customElements.define(Project2PlayerCard.tag, Project2PlayerCard);
+customElements.define(P2PlayerCard.tag, P2PlayerCard);
