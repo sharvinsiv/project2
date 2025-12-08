@@ -7,38 +7,40 @@ import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import "./project2-game-card.js";
 
 export class Project2Schedule extends DDDSuper(LitElement) {
+
   static get tag() { return "project2-schedule"; }
 
   constructor() {
     super();
     this.games = [
-      { date: "Jan 10, 2025", opponent: "State College Strikers", location: "Home", time: "5:00 PM" },
-      { date: "Jan 17, 2025", opponent: "Bellefonte United", location: "Away", time: "6:00 PM" },
-      { date: "Jan 24, 2025", opponent: "Philipsburg FC", location: "Home", time: "4:30 PM" }
+      { date: "Dec 10", opponent: "Maple Leafs", location: "Home", time: "7:00 PM" },
+      { date: "Dec 12", opponent: "Sharks", location: "Away", time: "6:30 PM" },
+      { date: "Dec 15", opponent: "Canadiens", location: "Home", time: "7:30 PM" },
     ];
   }
 
-  static styles = [
-    super.styles,
-    css`
+  static get properties() { return { ...super.properties, games: { type: Array } }; }
+
+  static get styles() {
+    return [super.styles, css`
       :host { display: block; }
-      .container { max-width: 1200px; margin: auto; }
-      h1 { color: var(--ddd-theme-default-navy80); margin-bottom: var(--ddd-spacing-4); }
-      .games { display: grid; gap: var(--ddd-spacing-4); margin-top: var(--ddd-spacing-4); }
-    `
-  ];
+      .schedule-container { max-width: 1200px; margin: 0 auto; padding: 16px; }
+      h1 { color: #1b5e20; font-size: 32px; margin-bottom: 16px; }
+      .games-list { display: grid; gap: 12px; }
+    `];
+  }
 
   render() {
     return html`
-      <div class="container">
-        <h1>Game Schedule</h1>
-        <div class="games">
-          ${this.games.map(g => html`
+      <div class="schedule-container">
+        <h1>Schedule</h1>
+        <div class="games-list">
+          ${this.games.map(game => html`
             <project2-game-card
-              .date=${g.date}
-              .opponent=${g.opponent}
-              .location=${g.location}
-              .time=${g.time}>
+              .date="${game.date}"
+              .opponent="${game.opponent}"
+              .location="${game.location}"
+              .time="${game.time}">
             </project2-game-card>
           `)}
         </div>
