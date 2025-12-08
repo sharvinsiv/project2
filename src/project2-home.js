@@ -12,8 +12,8 @@ export class Project2Home extends DDDSuper(LitElement) {
 
   constructor() {
     super();
-    this.teamName = "Happy Volley FC";
-    this.season = "2024-2025";
+    this.teamName = "Happy Volley Youth Soccer";
+    this.season = "2025-2026";
   }
 
   static get properties() { return { ...super.properties, teamName: { type: String }, season: { type: String } }; }
