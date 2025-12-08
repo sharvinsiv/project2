@@ -6,7 +6,15 @@ import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
 export class Project2GameCard extends DDDSuper(LitElement) {
-  static get tag() { return "p2-game-card"; }
+  static get tag() { return "project2-game-card"; }
+
+  static properties = {
+    ...super.properties,
+    date: { type: String },
+    opponent: { type: String },
+    location: { type: String },
+    time: { type: String }
+  };
 
   constructor() {
     super();
@@ -16,41 +24,32 @@ export class Project2GameCard extends DDDSuper(LitElement) {
     this.time = "TBD";
   }
 
-  static get properties() {
-    return { ...super.properties,
-      date: { type: String },
-      opponent: { type: String },
-      location: { type: String },
-      time: { type: String }
-    };
-  }
-
-  static get styles() {
-    return [super.styles, css`
+  static styles = [
+    super.styles,
+    css`
       :host { display: block; }
-      .card { background: #ffffff; padding: 16px; border-radius: 12px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: transform 0.2s; }
-      .card:hover { transform: translateY(-2px); }
-      .top { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 8px; }
-      .opponent { font-size: 1.2rem; margin-bottom: 4px; }
-      .time { color: #555; }
-      .location { background: #26a69a; color: #004d40; padding: 2px 8px; border-radius: 6px; font-size: 0.9rem; }
-    `];
-  }
+      .card { background: var(--ddd-theme-default-white); border-radius: var(--ddd-radius-md); padding: var(--ddd-spacing-4); box-shadow: var(--ddd-boxShadow-sm); transition: transform 0.2s; }
+      .card:hover { transform: translateY(-2px); box-shadow: var(--ddd-boxShadow-md); }
+      .date-location { display: flex; justify-content: space-between; margin-bottom: var(--ddd-spacing-2); }
+      .date { font-weight: bold; color: var(--ddd-theme-default-navy80); }
+      .location { background: var(--ddd-theme-default-skyBlue); color: var(--ddd-theme-default-navy80); border-radius: var(--ddd-radius-sm); padding: var(--ddd-spacing-1) var(--ddd-spacing-3); font-size: var(--ddd-font-size-s); }
+      .opponent { font-weight: bold; font-size: var(--ddd-font-size-xl); margin-bottom: var(--ddd-spacing-1); color: var(--ddd-theme-default-coalyGray); }
+      .time { font-size: var(--ddd-font-size-m); color: var(--ddd-theme-default-potentialMidnight); }
+    `
+  ];
 
   render() {
     return html`
       <div class="card">
-        <div class="top">
-          <div class="date">${this.date}</div>
-          <div class="location">${this.location}</div>
+        <div class="date-location">
+          <span class="date">${this.date}</span>
+          <span class="location">${this.location}</span>
         </div>
         <div class="opponent">vs ${this.opponent}</div>
         <div class="time">${this.time}</div>
       </div>
     `;
   }
-
-  static get haxProperties() { return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url).href; }
 }
 
-customElements.define(P2GameCard.tag, P2GameCard);
+customElements.define(Project2GameCard.tag, Project2GameCard);
