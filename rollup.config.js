@@ -1,25 +1,64 @@
-import resolve from '@rollup/plugin-node-resolve';
+import nodeResolve from '@rollup/plugin-node-resolve';
+import babel from '@rollup/plugin-babel';
+import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
+import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
 import esbuild from 'rollup-plugin-esbuild';
-import html from '@web/rollup-plugin-html';
-import copy from 'rollup-plugin-copy';
+import pkg from 'rollup-plugin-copy';
+const copy = pkg;
 
 export default {
-  input: 'src/project2-app.js',
+  input: 'index.html',
   output: {
+    entryFileNames: '[hash].js',
+    chunkFileNames: '[hash].js',
+    assetFileNames: '[hash][extname]',
+    format: 'es',
     dir: 'public',
-    format: 'es'
   },
+  preserveEntrySignatures: false,
+
   plugins: [
-    resolve(),
-    esbuild({ target: 'es2017' }),
-    html(),
+    /** Enable using HTML as rollup entrypoint */
+    html({
+      minify: true,
+    }),
     copy({
-      targets: [{ src: 'src/index.html', dest: 'public/' }],
-      copyOnce: true
-    })
+      targets: [
+        {
+          src: 'assets',
+          dest: `public/`,
+          flatten: false
+        },
+      ],
+    }),
+    /** Resolve bare module imports */
+    nodeResolve(),
+    /** Minify JS, compile JS to a lower language target */
+    esbuild({
+      minify: true,
+      target: ['chrome64', 'firefox67', 'safari11.1'],
+    }),
+    /** Bundle assets references via import.meta.url */
+    importMetaAssets(),
+    /** Minify html and css tagged template literals */
+    babel({
+      plugins: [
+        [
+          'babel-plugin-template-html-minifier',
+          {
+            modules: { lit: ['html', { name: 'css', encapsulation: 'style' }] },
+            failOnError: false,
+            strictCSS: true,
+            htmlMinifier: {
+              collapseWhitespace: true,
+              conservativeCollapse: true,
+              removeComments: true,
+              caseSensitive: true,
+              minifyCSS: true,
+            },
+          },
+        ],
+      ],
+    }),
   ],
-  onwarn(warning, warn) {
-    if (warning.code === 'EVAL' || warning.code === 'THIS_IS_UNDEFINED') return;
-    warn(warning);
-  }
 };
