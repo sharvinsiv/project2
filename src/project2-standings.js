@@ -25,35 +25,33 @@ export class Project2Standings extends DDDSuper(LitElement) {
     return [super.styles, css`
       :host { display: block; }
       .standings-container { max-width: 1200px; margin: 0 auto; }
-      h1 { color: var(--ddd-theme-default-green80); font-size: var(--ddd-font-size-3xl); margin-bottom: var(--ddd-spacing-4); }
+      h1 { color: #2a7d2a; font-size: 2rem; margin-bottom: 1rem; }
       .standings-list {
-        background-color: var(--ddd-theme-default-lightGreen);
-        border-radius: var(--ddd-radius-lg);
-        box-shadow: var(--ddd-boxShadow-md);
+        background-color: #d4f0d4;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         overflow: hidden;
       }
-      .standings-header {
+      .standings-header, .team-row {
         display: grid;
         grid-template-columns: 60px 2fr 1fr 1fr 1fr 1fr;
-        gap: var(--ddd-spacing-2);
-        padding: var(--ddd-spacing-3);
-        background-color: var(--ddd-theme-default-green90);
-        color: var(--ddd-theme-default-white);
-        font-weight: var(--ddd-font-weight-bold);
+        padding: 12px;
+        gap: 8px;
+      }
+      .standings-header {
+        background-color: #3ca23c;
+        color: white;
+        font-weight: bold;
       }
       .team-row {
-        display: grid;
-        grid-template-columns: 60px 2fr 1fr 1fr 1fr 1fr;
-        gap: var(--ddd-spacing-2);
-        padding: var(--ddd-spacing-3);
-        border-bottom: var(--ddd-border-sm);
-        border-color: var(--ddd-theme-default-lightGreen);
-        color: var(--ddd-theme-default-green90);
+        background-color: white;
+        color: #2a7d2a;
+        border-bottom: 1px solid #c0e0c0;
         transition: background-color 0.2s ease;
       }
-      .team-row:hover { background-color: var(--ddd-theme-default-lightGreen); }
-      .team-row.highlight { background-color: var(--ddd-theme-default-green80); font-weight: var(--ddd-font-weight-bold); color: var(--ddd-theme-default-white); }
-      .rank { text-align: center; font-weight: var(--ddd-font-weight-bold); }
+      .team-row:hover { background-color: #e0f8e0; }
+      .team-row.highlight { background-color: #2a7d2a; color: white; font-weight: bold; }
+      .rank { text-align: center; font-weight: bold; }
     `];
   }
 
