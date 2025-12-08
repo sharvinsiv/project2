@@ -1,13 +1,105 @@
 /**
- * Copyright 2025 sharvinsiv
- * @license Apache-2.0, see LICENSE for full text.
+ * Copyright 2025 Sharvin Sivarajah
+ * @license Apache-2.0
  */
-import './project2-header.js';
-import './project2-footer.js';
-import './project2-home.js';
-import './project2-match-card.js';
-import './project2-player-card.js';
-import './project2-roster.js';
-import './project2-schedule.js';
-import './project2-standings.js';
-import './project2-stats.js';
+import { LitElement, html, css } from "lit";
+import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
+
+import "./project2-header.js";
+import "./project2-home.js";
+import "./project2-schedule.js";
+import "./project2-roster.js";
+import "./project2-stats.js";
+import "./project2-standings.js";
+import "./project2-footer.js";
+
+export class Project2App extends DDDSuper(LitElement) {
+
+  static get tag() {
+    return "project2-app";
+  }
+
+  constructor() {
+    super();
+    this.route = window.location.pathname || "/";
+    this.initRouting();
+  }
+
+  static get properties() {
+    return {
+      ...super.properties,
+      route: { type: String },
+    };
+  }
+
+  static get styles() {
+    return [super.styles,
+      css`
+        :host {
+          display: block;
+          min-height: 100vh;
+          background-color: #f9fafb;
+        }
+        .app-container {
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+        }
+        .content {
+          flex: 1;
+          padding: 1rem 2rem;
+        }
+      `
+    ];
+  }
+
+  initRouting() {
+    this.route = window.location.pathname;
+    window.addEventListener('popstate', () => {
+      this.route = window.location.pathname;
+    });
+  }
+
+  handleNavigation(e) {
+    if (e.detail && e.detail.path) {
+      this.route = e.detail.path;
+      window.history.pushState({}, "", e.detail.path);
+    }
+  }
+
+  renderPage() {
+    switch(this.route) {
+      case '/schedule':
+        return html`<project2-schedule></project2-schedule>`;
+      case '/roster':
+        return html`<project2-roster></project2-roster>`;
+      case '/stats':
+        return html`<project2-stats></project2-stats>`;
+      case '/standings':
+        return html`<project2-standings></project2-standings>`;
+      default:
+        return html`<project2-home></project2-home>`;
+    }
+  }
+
+  render() {
+    return html`
+      <div class="app-container">
+        <project2-header 
+          .currentRoute="${this.route}"
+          @navigate="${this.handleNavigation}">
+        </project2-header>
+        <div class="content">
+          ${this.renderPage()}
+        </div>
+        <project2-footer></project2-footer>
+      </div>
+    `;
+  }
+
+  static get haxProperties() {
+    return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url).href;
+  }
+}
+
+globalThis.customElements.define(Project2App.tag, Project2App);
