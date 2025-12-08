@@ -6,33 +6,33 @@ import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
 export class Project2PlayerCard extends DDDSuper(LitElement) {
-  static get tag() { return "p2-player-card"; }
+  static get tag() { return "project2-player-card"; }
+
+  static properties = {
+    ...super.properties,
+    name: { type: String },
+    number: { type: String },
+    position: { type: String }
+  };
 
   constructor() {
     super();
-    this.name = "Player Name";
+    this.name = "Player";
     this.number = "00";
     this.position = "Position";
   }
 
-  static get properties() {
-    return { ...super.properties,
-      name: { type: String },
-      number: { type: String },
-      position: { type: String }
-    };
-  }
-
-  static get styles() {
-    return [super.styles, css`
+  static styles = [
+    super.styles,
+    css`
       :host { display: block; }
-      .card { background: linear-gradient(135deg,#004d40,#26a69a); color: white; text-align: center; padding: 16px; border-radius: 12px; transition: transform 0.2s; }
+      .card { text-align: center; padding: var(--ddd-spacing-4); border-radius: var(--ddd-radius-md); background: linear-gradient(135deg, var(--ddd-theme-default-limeGreen), var(--ddd-theme-default-skyBlue)); color: white; transition: transform 0.2s; }
       .card:hover { transform: scale(1.05); }
-      .number { font-size: 2.5rem; font-weight: bold; margin-bottom: 4px; }
-      .name { font-weight: 500; font-size: 1.1rem; margin-bottom: 2px; }
-      .position { opacity: 0.9; font-size: 0.95rem; }
-    `];
-  }
+      .number { font-size: var(--ddd-font-size-4xl); font-weight: bold; margin-bottom: var(--ddd-spacing-2); }
+      .name { font-size: var(--ddd-font-size-l); font-weight: medium; margin-bottom: var(--ddd-spacing-1); }
+      .position { font-size: var(--ddd-font-size-m); opacity: 0.9; }
+    `
+  ];
 
   render() {
     return html`
@@ -43,8 +43,6 @@ export class Project2PlayerCard extends DDDSuper(LitElement) {
       </div>
     `;
   }
-
-  static get haxProperties() { return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url).href; }
 }
 
-customElements.define(P2PlayerCard.tag, P2PlayerCard);
+customElements.define(Project2PlayerCard.tag, Project2PlayerCard);
