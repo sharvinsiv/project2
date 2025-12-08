@@ -15,7 +15,7 @@ export class Project2Roster extends DDDSuper(LitElement) {
     this.players = [
       { name: "Kazaiah Sterling", number: "9", position: "Left Back" },
       { name: "Dejan Kulusevski", number: "20", position: "Right Wing" },
-      { name: "Djed SPence", number: "3", position: "Right Back" },
+      { name: "Djed Spence", number: "3", position: "Right Back" },
       { name: "Rodrigo Bentancur", number: "8", position: "Central Midfielder" },
       { name: "Harry Kane", number: "9", position: "Striker" },
       { name: "Hugo Lloris", number: "1", position: "Goalkeeper" },
