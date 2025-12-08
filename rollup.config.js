@@ -16,31 +16,19 @@ export default {
     dir: 'public',
   },
   preserveEntrySignatures: false,
-
   plugins: [
-    /** Enable using HTML as rollup entrypoint */
-    html({
-      minify: true,
-    }),
+    html({ minify: true }),
     copy({
       targets: [
-        {
-          src: 'assets',
-          dest: `public/`,
-          flatten: false
-        },
+        { src: 'assets', dest: 'public/', flatten: false },
       ],
     }),
-    /** Resolve bare module imports */
     nodeResolve(),
-    /** Minify JS, compile JS to a lower language target */
     esbuild({
       minify: true,
       target: ['chrome64', 'firefox67', 'safari11.1'],
     }),
-    /** Bundle assets references via import.meta.url */
     importMetaAssets(),
-    /** Minify html and css tagged template literals */
     babel({
       plugins: [
         [
