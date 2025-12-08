@@ -31,12 +31,25 @@ export class Project2App extends DDDSuper(LitElement) {
       :host {
         display: block;
         min-height: 100vh;
-        font-family: Arial, sans-serif;
+        font-family: 'Poppins', sans-serif; /* modern, clean font */
         background-color: #ffffff;
         color: #1b5e20; /* dark green */
+        line-height: 1.6;
+        scroll-behavior: smooth;
       }
-      .app-container { display: flex; flex-direction: column; min-height: 100vh; }
-      .content { flex: 1; padding: 16px; }
+
+      .app-container { 
+        display: flex; 
+        flex-direction: column; 
+        min-height: 100vh; 
+      }
+
+      .content { 
+        flex: 1; 
+        padding: 32px 24px; 
+        max-width: 1400px; 
+        margin: 0 auto; 
+      }
     `];
   }
 
@@ -69,3 +82,4 @@ export class Project2App extends DDDSuper(LitElement) {
 }
 
 customElements.define(Project2App.tag, Project2App);
+
