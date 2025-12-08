@@ -13,10 +13,10 @@ export class Project2Roster extends DDDSuper(LitElement) {
   constructor() {
     super();
     this.players = [
-      { name: "John Smith", number: "17", position: "Forward" },
-      { name: "Sarah Johnson", number: "23", position: "Defense" },
-      { name: "Mike Wilson", number: "1", position: "Goalie" },
-      { name: "Emily Davis", number: "8", position: "Forward" }
+      { name: "Kazaiah Sterling", number: "9", position: "Left Back" },
+      { name: "Dejan Kulusevski", number: "20", position: "Right Wing" },
+      { name: "Djed SPence", number: "3", position: "Right Back" },
+      { name: "Rodrigo Bentancur", number: "8", position: "Central Midfielder" }
     ];
   }
 
