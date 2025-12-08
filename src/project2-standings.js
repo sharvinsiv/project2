@@ -12,9 +12,9 @@ export class Project2Standings extends DDDSuper(LitElement) {
   constructor() {
     super();
     this.standings = [
-      { team: "Kiwi Ice Hawks", wins: 10, losses: 2, ties: 1 },
-      { team: "Maple Leafs", wins: 8, losses: 3, ties: 2 },
-      { team: "Sharks", wins: 7, losses: 5, ties: 1 }
+      { team: "The Philadelphia Penalties", wins: 10, losses: 2, ties: 1 },
+      { team: "Pittsburgh Riverhounds", wins: 8, losses: 3, ties: 2 },
+      { team: "Harrisburg Handlers", wins: 4, losses: 5, ties: 1 }
     ];
   }
 
