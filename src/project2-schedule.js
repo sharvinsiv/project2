@@ -13,9 +13,9 @@ export class Project2Schedule extends DDDSuper(LitElement) {
   constructor() {
     super();
     this.games = [
-      { date: "Dec 10", opponent: "Maple Leafs", location: "Home", time: "7:00 PM" },
-      { date: "Dec 12", opponent: "Sharks", location: "Away", time: "6:30 PM" },
-      { date: "Dec 15", opponent: "Canadiens", location: "Home", time: "7:30 PM" },
+      { date: "Dec 10", opponent: "The Philadelphia Penalties", location: "Home", time: "7:00 PM" },
+      { date: "Dec 12", opponent: "Harrisburg Handlers", location: "Away", time: "6:30 PM" },
+      { date: "Dec 15", opponent: "Pittsburgh Riverhounds", location: "Home", time: "7:30 PM" },
     ];
   }
 
