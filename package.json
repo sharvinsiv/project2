@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Happy Volley FC - Hockey Team Network Application",
   "type": "module",
-  "main": "src/p2-app.js",
+  "main": "src/project2-app.js",
   "scripts": {
     "start": "web-dev-server",
     "build": "rimraf public && rollup -c rollup.config.js",
