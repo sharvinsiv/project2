@@ -6,8 +6,7 @@ import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
 export class Project2GameCard extends DDDSuper(LitElement) {
-
-  static get tag() { return "project2-game-card"; }
+  static get tag() { return "p2-game-card"; }
 
   constructor() {
     super();
@@ -18,8 +17,7 @@ export class Project2GameCard extends DDDSuper(LitElement) {
   }
 
   static get properties() {
-    return {
-      ...super.properties,
+    return { ...super.properties,
       date: { type: String },
       opponent: { type: String },
       location: { type: String },
@@ -29,26 +27,20 @@ export class Project2GameCard extends DDDSuper(LitElement) {
 
   static get styles() {
     return [super.styles, css`
-      :host { display:block; margin-bottom:1rem; }
-      .card {
-        background-color:#fef3c7;
-        border:2px solid #f87171;
-        border-radius:1rem;
-        padding:1rem 1.5rem;
-        box-shadow:0 4px 6px rgba(0,0,0,0.1);
-        transition:transform 0.2s ease, box-shadow 0.2s ease;
-      }
-      .card:hover { transform:translateY(-3px); box-shadow:0 6px 12px rgba(0,0,0,0.15); }
-      .game-header { display:flex; justify-content:space-between; margin-bottom:0.5rem; font-weight:bold; color:#1e40af; }
-      .opponent { font-size:1.25rem; margin-bottom:0.25rem; color:#ef4444; }
-      .time { font-size:1rem; color:#6b7280; }
+      :host { display: block; }
+      .card { background: #ffffff; padding: 16px; border-radius: 12px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: transform 0.2s; }
+      .card:hover { transform: translateY(-2px); }
+      .top { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 8px; }
+      .opponent { font-size: 1.2rem; margin-bottom: 4px; }
+      .time { color: #555; }
+      .location { background: #26a69a; color: #004d40; padding: 2px 8px; border-radius: 6px; font-size: 0.9rem; }
     `];
   }
 
   render() {
     return html`
       <div class="card">
-        <div class="game-header">
+        <div class="top">
           <div class="date">${this.date}</div>
           <div class="location">${this.location}</div>
         </div>
@@ -57,6 +49,8 @@ export class Project2GameCard extends DDDSuper(LitElement) {
       </div>
     `;
   }
+
+  static get haxProperties() { return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url).href; }
 }
 
-globalThis.customElements.define(Project2GameCard.tag, Project2GameCard);
+customElements.define(P2GameCard.tag, P2GameCard);
