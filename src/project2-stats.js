@@ -6,52 +6,45 @@ import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
 export class Project2Stats extends DDDSuper(LitElement) {
-  static get tag() { return "p2-stats"; }
+  static get tag() { return "project2-stats"; }
 
   constructor() {
     super();
-    this.wins = 5;
+    this.wins = 8;
     this.losses = 2;
     this.ties = 1;
-    this.goalsFor = 18;
-    this.goalsAgainst = 12;
+    this.goalsFor = 21;
+    this.goalsAgainst = 10;
   }
 
-  static get properties() {
-    return { ...super.properties,
-      wins: { type: Number },
-      losses: { type: Number },
-      ties: { type: Number },
-      goalsFor: { type: Number },
-      goalsAgainst: { type: Number }
-    };
-  }
-
-  static get styles() {
-    return [super.styles, css`
+  static styles = [
+    super.styles,
+    css`
       :host { display: block; }
-      h1 { font-size: 2rem; color: #004d40; margin-bottom: 16px; }
-      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px; }
-      .card { background: #26a69a; color: #004d40; border-radius: 10px; text-align: center; padding: 12px; }
-      .value { font-size: 1.5rem; font-weight: bold; }
-      .label { font-size: 0.9rem; margin-top: 4px; }
-    `];
-  }
+      .container { max-width: 1200px; margin: auto; }
+      h1 { color: var(--ddd-theme-default-navy80); margin-bottom: var(--ddd-spacing-4); }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--ddd-spacing-4); }
+      .card { background: var(--ddd-theme-default-skyBlue); border-radius: var(--ddd-radius-md); padding: var(--ddd-spacing-4); text-align: center; box-shadow: var(--ddd-boxShadow-sm); }
+      .value { font-size: var(--ddd-font-size-3xl); font-weight: bold; color: var(--ddd-theme-default-navy80); }
+      .label { font-size: var(--ddd-font-size-m); margin-top: var(--ddd-spacing-2); color: var(--ddd-theme-default-coalyGray); }
+    `
+  ];
 
   render() {
     return html`
-      <h1>Team Statistics</h1>
-      <div class="grid">
-        <div class="card"><div class="value">${this.wins}</div><div class="label">Wins</div></div>
-        <div class="card"><div class="value">${this.losses}</div><div class="label">Losses</div></div>
-        <div class="card"><div class="value">${this.ties}</div><div class="label">Ties</div></div>
-        <div class="card"><div class="value">${this.goalsFor}</div><div class="label">Goals For</div></div>
-        <div class="card"><div class="value">${this.goalsAgainst}</div><div class="label">Goals Against</div></div>
+      <div class="container">
+        <h1>Team Statistics</h1>
+        <div class="grid">
+          ${["Wins","Losses","Ties","Goals For","Goals Against"].map((label,i) => html`
+            <div class="card">
+              <div class="value">${[this.wins,this.losses,this.ties,this.goalsFor,this.goalsAgainst][i]}</div>
+              <div class="label">${label}</div>
+            </div>
+          `)}
+        </div>
       </div>
     `;
   }
-
-  static get haxProperties() { return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url).href; }
 }
 
-customElements.define(P2Stats.tag, P2Stats);
+customElements.define(Project2Stats.tag, Project2Stats);
