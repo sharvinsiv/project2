@@ -12,7 +12,7 @@ export class Project2Home extends DDDSuper(LitElement) {
 
   constructor() {
     super();
-    this.teamName = "Kiwi Ice Hawks";
+    this.teamName = "Happy Volley FC";
     this.season = "2024-2025";
   }
 
@@ -51,7 +51,7 @@ export class Project2Home extends DDDSuper(LitElement) {
           <p>Season ${this.season}</p>
         </div>
         <div class="welcome-section">
-          <h2>Welcome to Kiwi the Icer</h2>
+          <h2>Welcome to Happy Volley FC</h2>
           <p>Follow our team through the season with live updates, player stats, schedules, and more.</p>
         </div>
         <h2>Upcoming Games</h2>
