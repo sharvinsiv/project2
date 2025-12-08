@@ -2,6 +2,10 @@
  * Copyright 2025 sharvinsiv
  * @license Apache-2.0, see LICENSE for full text.
  */
+/**
+ * Copyright 2025 sharvinsiv
+ * @license Apache-2.0, see LICENSE for full text.
+ */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
@@ -23,21 +27,22 @@ export class Project2GameCard extends DDDSuper(LitElement) {
 
   static get styles() {
     return [super.styles, css`
-      :host { display: block; }
+      :host { display: block; font-family: 'Poppins', sans-serif; }
       .card {
-        background-color: #ffffff;
+        background: linear-gradient(135deg, #81c784 0%, #ffffff 100%);
         border: 2px solid #1b5e20;
-        border-radius: 8px;
-        padding: 16px;
-        margin-bottom: 12px;
-        transition: transform 0.2s;
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 16px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
       }
-      .card:hover { transform: translateY(-2px); }
-      .game-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
-      .date { font-weight: bold; color: #1b5e20; }
-      .location-badge { background-color: #81c784; color: #000000; padding: 4px 8px; border-radius: 4px; }
-      .opponent { font-size: 18px; font-weight: bold; margin-bottom: 4px; color: #1b5e20; }
-      .time { font-size: 14px; color: #000000; }
+      .card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+      .game-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
+      .date { font-weight: 700; color: #1b5e20; }
+      .location-badge { background-color: #1b5e20; color: #ffffff; padding: 6px 12px; border-radius: 12px; font-weight: 600; }
+      .opponent { font-size: 20px; font-weight: 700; margin-bottom: 6px; color: #1b5e20; }
+      .time { font-size: 14px; color: #1b5e20; font-weight: 500; }
     `];
   }
 
@@ -56,3 +61,4 @@ export class Project2GameCard extends DDDSuper(LitElement) {
 }
 
 customElements.define(Project2GameCard.tag, Project2GameCard);
+
