@@ -9,18 +9,23 @@ export class Project2Footer extends DDDSuper(LitElement) {
 
   static get tag() { return "project2-footer"; }
 
-  constructor() { super(); this.year = new Date().getFullYear(); }
+  constructor() { 
+    super(); 
+    this.year = new Date().getFullYear(); 
+  }
 
-  static get properties() { return { ...super.properties, year: { type: Number } }; }
+  static get properties() { 
+    return { ...super.properties, year: { type: Number } }; 
+  }
 
   static get styles() {
     return [super.styles, css`
-      :host { display: block; background-color: #1b5e20; color: #ffffff; margin-top: 32px; }
-      .footer-wrapper { max-width: 1200px; margin: 0 auto; padding: 16px; text-align: center; }
-      .social-links { display: flex; gap: 12px; justify-content: center; margin-top: 8px; }
-      .social-link { color: #81c784; text-decoration: none; transition: color 0.3s; }
-      .social-link:hover { color: #000000; }
-      .copyright { font-size: 14px; }
+      :host { display: block; background-color: #1b5e20; color: #ffffff; margin-top: 48px; font-family: 'Poppins', sans-serif; }
+      .footer-wrapper { max-width: 1400px; margin: 0 auto; padding: 24px; text-align: center; border-top: 3px solid #81c784; border-radius: 12px 12px 0 0; }
+      .social-links { display: flex; gap: 16px; justify-content: center; margin-top: 12px; }
+      .social-link { color: #81c784; text-decoration: none; font-weight: 500; transition: all 0.3s; }
+      .social-link:hover { color: #000000; transform: scale(1.1); }
+      .copyright { font-size: 14px; opacity: 0.9; }
     `];
   }
 
@@ -39,3 +44,4 @@ export class Project2Footer extends DDDSuper(LitElement) {
 }
 
 customElements.define(Project2Footer.tag, Project2Footer);
+
