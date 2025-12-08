@@ -6,14 +6,13 @@
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
-export class Project2Header extends DDDSuper(LitElement) {
-
-  static get tag() { return "project2-header"; }
+export class P2Header extends DDDSuper(LitElement) {
+  static get tag() { return "p2-header"; }
 
   constructor() {
     super();
-    this.currentRoute = "/";
-    this.navItems = [
+    this.activePath = "/";
+    this.links = [
       { path: "/", label: "Home" },
       { path: "/schedule", label: "Schedule" },
       { path: "/roster", label: "Roster" },
@@ -22,36 +21,39 @@ export class Project2Header extends DDDSuper(LitElement) {
     ];
   }
 
-  static get properties() { return { ...super.properties, currentRoute: { type: String }, navItems: { type: Array } }; }
+  static get properties() { return { ...super.properties, activePath: { type: String }, links: { type: Array } }; }
 
   static get styles() {
     return [super.styles, css`
-      :host { display:block; background-color:#1e40af; color:#f9fafb; box-shadow:0 2px 4px rgba(0,0,0,0.2); }
-      .header-wrapper { display:flex; justify-content:space-between; align-items:center; max-width:1200px; margin:0 auto; padding:1rem; }
-      .logo { font-size:1.5rem; font-weight:bold; color:#fbbf24; }
-      nav { display:flex; gap:1rem; }
-      .nav-link { color:#f9fafb; text-decoration:none; padding:0.5rem 1rem; border-radius:0.25rem; font-weight:500; transition:0.3s; }
-      .nav-link:hover, .nav-link.active { background-color:#fbbf24; color:#1e40af; }
+      :host { display: block; background: #004d40; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+      .header { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 10px 20px; }
+      .logo { font-weight: bold; font-size: 1.5rem; color: #26a69a; }
+      nav { display: flex; gap: 12px; }
+      a { text-decoration: none; padding: 6px 12px; border-radius: 5px; color: white; transition: background 0.2s; font-weight: 500; }
+      a:hover, a.active { background: #26a69a; color: #004d40; }
     `];
   }
 
-  handleClick(e,path) {
+  onLinkClick(e, path) {
     e.preventDefault();
-    this.dispatchEvent(new CustomEvent('navigate',{detail:{path},bubbles:true,composed:true}));
+    this.dispatchEvent(new CustomEvent("navigate", { detail: { path }, bubbles: true, composed: true }));
   }
 
   render() {
     return html`
-      <div class="header-wrapper">
+      <div class="header">
         <div class="logo">Happy Volley FC</div>
         <nav>
-          ${this.navItems.map(item => html`
-            <a href="${item.path}" class="nav-link ${this.currentRoute===item.path?'active':''}" @click=${e=>this.handleClick(e,item.path)}>${item.label}</a>
+          ${this.links.map(link => html`
+            <a href="${link.path}" class="${this.activePath===link.path?'active':''}" @click="${e=>this.onLinkClick(e, link.path)}">${link.label}</a>
           `)}
         </nav>
       </div>
     `;
   }
+
+  static get haxProperties() { return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url).href; }
 }
 
-globalThis.customElements.define(Project2Header.tag, Project2Header);
+customElements.define(Project2Header.tag, Project2Header);
+
