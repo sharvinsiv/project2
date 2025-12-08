@@ -23,10 +23,10 @@ export class Project2Schedule extends DDDSuper(LitElement) {
 
   static get styles() {
     return [super.styles, css`
-      :host { display: block; }
-      .schedule-container { max-width: 1200px; margin: 0 auto; padding: 16px; }
-      h1 { color: #1b5e20; font-size: 32px; margin-bottom: 16px; }
-      .games-list { display: grid; gap: 12px; }
+      :host { display: block; font-family: 'Poppins', sans-serif; }
+      .schedule-container { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
+      h1 { color: #1b5e20; font-size: 36px; margin-bottom: 24px; border-bottom: 2px solid #81c784; display: inline-block; padding-bottom: 4px; }
+      .games-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
     `];
   }
 
