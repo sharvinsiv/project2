@@ -13,52 +13,55 @@ import "./project2-standings.js";
 import "./project2-footer.js";
 
 export class Project2App extends DDDSuper(LitElement) {
-  static get tag() { return "project2-app"; }
 
-  static properties = {
-    ...super.properties,
-    currentPath: { type: String }
-  };
+  static get tag() { return "project2-app"; }
 
   constructor() {
     super();
-    this.currentPath = window.location.pathname || "/";
-    window.addEventListener("popstate", () => this.currentPath = window.location.pathname);
+    this.route = window.location.pathname || "/";
+    window.addEventListener('popstate', () => { this.route = window.location.pathname; });
   }
 
-  navigateTo(event) {
-    const path = event.detail?.path;
-    if(path) {
-      this.currentPath = path;
-      window.history.pushState({}, "", path);
+  static get properties() {
+    return { ...super.properties, route: { type: String } };
+  }
+
+  static get styles() {
+    return [super.styles, css`
+      :host {
+        display: block;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+        color: #1b5e20; /* dark green */
+      }
+      .app-container { display: flex; flex-direction: column; min-height: 100vh; }
+      .content { flex: 1; padding: 16px; }
+    `];
+  }
+
+  handleNavigation(e) {
+    if (e.detail?.path) {
+      this.route = e.detail.path;
+      window.history.pushState({}, "", e.detail.path);
     }
   }
 
-  renderContent() {
-    const routes = {
-      "/schedule": html`<project2-schedule></project2-schedule>`,
-      "/roster": html`<project2-roster></project2-roster>`,
-      "/stats": html`<project2-stats></project2-stats>`,
-      "/standings": html`<project2-standings></project2-standings>`,
-      "/": html`<project2-home></project2-home>`
-    };
-    return routes[this.currentPath] || html`<project2-home></project2-home>`;
+  renderPage() {
+    switch(this.route) {
+      case '/schedule': return html`<project2-schedule></project2-schedule>`;
+      case '/roster': return html`<project2-roster></project2-roster>`;
+      case '/stats': return html`<project2-stats></project2-stats>`;
+      case '/standings': return html`<project2-standings></project2-standings>`;
+      default: return html`<project2-home></project2-home>`;
+    }
   }
-
-  static styles = [
-    super.styles,
-    css`
-      :host { display: block; min-height: 100vh; background: var(--ddd-theme-default-white); }
-      .app-container { display: flex; flex-direction: column; min-height: 100vh; }
-      .main-content { flex: 1; padding: var(--ddd-spacing-4); }
-    `
-  ];
 
   render() {
     return html`
       <div class="app-container">
-        <project2-header .activePath=${this.currentPath} @navigate=${this.navigateTo}></project2-header>
-        <div class="main-content">${this.renderContent()}</div>
+        <project2-header .currentRoute="${this.route}" @navigate="${this.handleNavigation}"></project2-header>
+        <div class="content">${this.renderPage()}</div>
         <project2-footer></project2-footer>
       </div>
     `;
