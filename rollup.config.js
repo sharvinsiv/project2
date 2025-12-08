@@ -8,18 +8,24 @@ export default {
   input: 'src/project2-app.js',
   output: {
     dir: 'public',
-    format: 'es'
+    format: 'es',
+    sourcemap: true
   },
   plugins: [
     resolve(),
-    esbuild(),
+    esbuild({ target: 'es2017' }),
     html({ minify: true }),
     terser(),
     copy({
       targets: [
         { src: 'src/index.html', dest: 'public/' }
-      ]
+      ],
+      verbose: true,
+      copyOnce: true
     })
-  ]
+  ],
+  onwarn(warning, warn) {
+    if (warning.code === 'EVAL' || warning.code === 'THIS_IS_UNDEFINED') return;
+    warn(warning);
+  }
 };
-
