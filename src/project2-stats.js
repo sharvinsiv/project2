@@ -13,7 +13,7 @@ export class Project2Stats extends DDDSuper(LitElement) {
     super();
     this.stats = [
       { player: "Alexander Moreno", goals: 52, assists: 0 },
-      { player: "Djed Spence", goals:0 , assists: 11 },
+      { player: "Djed Spence", goals: 0, assists: 11 },
       { player: "Rodrigo Bentancur", goals: 3, assists: 3 }
     ];
   }
@@ -47,7 +47,6 @@ export class Project2Stats extends DDDSuper(LitElement) {
               <th>Player</th>
               <th>Goals</th>
               <th>Assists</th>
-              <th>Points</th>
             </tr>
           </thead>
           <tbody>
@@ -56,7 +55,6 @@ export class Project2Stats extends DDDSuper(LitElement) {
                 <td>${player.player}</td>
                 <td>${player.goals}</td>
                 <td>${player.assists}</td>
-                <td>${player.points}</td>
               </tr>
             `)}
           </tbody>
@@ -67,3 +65,4 @@ export class Project2Stats extends DDDSuper(LitElement) {
 }
 
 customElements.define(Project2Stats.tag, Project2Stats);
+
