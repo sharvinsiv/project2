@@ -8,7 +8,8 @@ const copy = pkg;
 
 export default {
 
-  input: 'src/project2-app.js',
+  input: 'index.html',
+
 
   output: {
     entryFileNames: '[hash].js',
