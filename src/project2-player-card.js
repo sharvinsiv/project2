@@ -6,39 +6,43 @@ import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
 export class Project2PlayerCard extends DDDSuper(LitElement) {
-  static get tag() { return "project2-player-card"; }
 
-  static properties = {
-    ...super.properties,
-    name: { type: String },
-    number: { type: String },
-    position: { type: String }
-  };
+  static get tag() { return "project2-player-card"; }
 
   constructor() {
     super();
-    this.name = "Player";
+    this.name = "Player Name";
     this.number = "00";
     this.position = "Position";
   }
 
-  static styles = [
-    super.styles,
-    css`
+  static get properties() {
+    return { ...super.properties, name: { type: String }, number: { type: String }, position: { type: String } };
+  }
+
+  static get styles() {
+    return [super.styles, css`
       :host { display: block; }
-      .card { text-align: center; padding: var(--ddd-spacing-4); border-radius: var(--ddd-radius-md); background: linear-gradient(135deg, var(--ddd-theme-default-limeGreen), var(--ddd-theme-default-skyBlue)); color: white; transition: transform 0.2s; }
+      .card {
+        background: linear-gradient(135deg, #81c784 0%, #1b5e20 100%);
+        color: #ffffff;
+        border-radius: 8px;
+        padding: 16px;
+        text-align: center;
+        transition: transform 0.2s;
+      }
       .card:hover { transform: scale(1.05); }
-      .number { font-size: var(--ddd-font-size-4xl); font-weight: bold; margin-bottom: var(--ddd-spacing-2); }
-      .name { font-size: var(--ddd-font-size-l); font-weight: medium; margin-bottom: var(--ddd-spacing-1); }
-      .position { font-size: var(--ddd-font-size-m); opacity: 0.9; }
-    `
-  ];
+      .jersey-number { font-size: 36px; font-weight: bold; margin-bottom: 8px; }
+      .player-name { font-size: 20px; font-weight: medium; margin-bottom: 4px; }
+      .position { font-size: 16px; opacity: 0.9; }
+    `];
+  }
 
   render() {
     return html`
       <div class="card">
-        <div class="number">#${this.number}</div>
-        <div class="name">${this.name}</div>
+        <div class="jersey-number">#${this.number}</div>
+        <div class="player-name">${this.name}</div>
         <div class="position">${this.position}</div>
       </div>
     `;
