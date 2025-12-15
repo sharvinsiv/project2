@@ -4,13 +4,8 @@
  * @license Apache-2.0, see LICENSE for full text.
  */
 import { LitElement, html, css } from "lit";
-import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
-export class Project2Header extends DDDSuper(LitElement) {
-  static get tag() {
-    return "project2-header";
-  }
-
+export class Project2Header extends LitElement {
   static styles = css`
     header {
       background: var(--accent-color);
@@ -21,23 +16,38 @@ export class Project2Header extends DDDSuper(LitElement) {
       align-items: center;
     }
 
-    nav {
+    .left {
       display: flex;
       align-items: center;
+      gap: 14px;
+    }
+
+    .menu-btn {
+      font-size: 20px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .logo {
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    nav {
+      display: flex;
       gap: 12px;
+      align-items: center;
     }
 
     button {
       background: none;
       border: none;
       color: white;
-      font-size: 16px;
       cursor: pointer;
-      padding: 6px 10px;
-    }
-
-    button:hover {
-      text-decoration: underline;
+      font-size: 15px;
     }
 
     .theme-toggle {
@@ -63,26 +73,34 @@ export class Project2Header extends DDDSuper(LitElement) {
     }));
   }
 
+  toggleMenu() {
+    this.dispatchEvent(new CustomEvent("toggle-menu", {
+      bubbles: true,
+      composed: true
+    }));
+  }
+
   render() {
     return html`
       <header>
-        <strong>Happy Volley FC</strong>
+        <div class="left">
+          <button class="menu-btn" @click=${this.toggleMenu}>☰</button>
+          <div class="logo" @click=${() => this.nav("home")}>
+            Happy Volley FC
+          </div>
+        </div>
+
         <nav>
-          <button @click=${() => this.nav("home")}>Home</button>
           <button @click=${() => this.nav("schedule")}>Schedule</button>
           <button @click=${() => this.nav("roster")}>Roster</button>
           <button @click=${() => this.nav("stats")}>Stats</button>
           <button @click=${() => this.nav("standings")}>Standings</button>
-
-          <!-- Dark / Light Toggle -->
-          <button class="theme-toggle" @click=${this.toggleTheme}>
-            🌙 / ☀️
-          </button>
+          <button class="theme-toggle" @click=${this.toggleTheme}>🌙 / ☀️</button>
         </nav>
       </header>
     `;
   }
 }
 
-customElements.define(Project2Header.tag, Project2Header);
+customElements.define("project2-header", Project2Header);
 
