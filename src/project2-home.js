@@ -56,15 +56,15 @@ their skills, confidence, and love for the game.
 <h2>Team Gallery</h2>
 <div class="gallery">
 <figure>
-<img src="https://images.unsplash.com/photo-1517649763962-0c623066013b">
+<img src="https://spacecoastdaily.com/wp-content/uploads/2025/06/EFSC-Mens-Soccer.jpg">
 <figcaption>Game day energy</figcaption>
 </figure>
 <figure>
-<img src="https://images.unsplash.com/photo-1521412644187-c49fa049e84d">
+<img src="https://gearupwithus.com/wp-content/uploads/2025/09/iStock-2228740185-1024x683.jpg">
 <figcaption>Practice session</figcaption>
 </figure>
 <figure>
-<img src="https://images.unsplash.com/photo-1508609349937-5ec4ae374ebf">
+<img src="https://www.missourisoccer.org/wp-content/uploads/sites/164/2024/06/State-Cup-13.jpg?w=1024">
 <figcaption>Teamwork on the field</figcaption>
 </figure>
 </div>
