@@ -11,22 +11,19 @@ export class Project2Header extends DDDSuper(LitElement) {
     return "project2-header";
   }
 
-  static get properties() {
-    return {
-      ...super.properties,
-      currentRoute: { type: String },
-      navItems: { type: Array },
-      sidebarOpen: { type: Boolean },
-      theme: { type: String }
-    };
-  }
+  static properties = {
+    currentRoute: { type: String },
+    navItems: { type: Array },
+    sidebarOpen: { type: Boolean },
+    theme: { type: String }
+  };
 
   constructor() {
     super();
-    this.currentRoute = "/";
+    this.currentRoute = window.location.pathname || "/";
     this.navItems = [];
     this.sidebarOpen = false;
-    this.theme = "light";
+    this.theme = "dark";
   }
 
   connectedCallback() {
@@ -40,13 +37,13 @@ export class Project2Header extends DDDSuper(LitElement) {
       const data = await res.json();
       this.navItems = data.items || [];
     } catch (e) {
-      console.warn("Menu API failed, using fallback");
       this.navItems = [
         { label: "Home", path: "/" },
         { label: "Schedule", path: "/schedule" },
         { label: "Roster", path: "/roster" },
         { label: "Stats", path: "/stats" },
-        { label: "Standings", path: "/standings" }
+        { label: "Standings", path: "/standings" },
+        { label: "Join Us", path: "/join" }
       ];
     }
   }
@@ -66,7 +63,7 @@ export class Project2Header extends DDDSuper(LitElement) {
     this.sidebarOpen = !this.sidebarOpen;
   }
 
-  toggleTheme() {
+  emitToggleTheme() {
     this.dispatchEvent(
       new CustomEvent("toggle-theme", {
         bubbles: true,
@@ -75,118 +72,102 @@ export class Project2Header extends DDDSuper(LitElement) {
     );
   }
 
-  static get styles() {
-    return [super.styles, css`
-      :host {
-        display: block;
-        background-color: #1b5e20;
-        color: white;
-      }
+  static styles = css`
+    :host {
+      display: block;
+      background: #1b5e20;
+      color: white;
+    }
 
-      .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: var(--ddd-spacing-4);
-        max-width: 1400px;
-        margin: 0 auto;
-      }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-      .left {
-        display: flex;
-        align-items: center;
-        gap: var(--ddd-spacing-3);
-      }
+    nav {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
 
-      .logo {
-        font-size: 24px;
-        font-weight: bold;
-        color: #81c784;
-        cursor: pointer;
-      }
+    button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      font-family: var(--ddd-font-navigation);
+    }
 
-      nav {
-        display: flex;
-        gap: var(--ddd-spacing-2);
-      }
+    button:hover {
+      background: rgba(255,255,255,0.15);
+    }
 
-      button {
-        background: none;
-        border: none;
-        color: white;
-        padding: 8px 12px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 16px;
-      }
+    .sidebar {
+      display: none;
+      background: #145a23;
+      padding: 16px;
+    }
 
-      button.active,
-      button:hover {
-        background-color: #81c784;
-        color: black;
-      }
+    .sidebar.open {
+      display: block;
+    }
 
-      .menu-btn {
-        font-size: 22px;
-      }
+    .sidebar button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      margin-bottom: 8px;
+    }
 
-      .sidebar {
-        display: none;
-        background: #145a23;
-        padding: var(--ddd-spacing-4);
-      }
-
-      .sidebar.open {
-        display: block;
-      }
-
-      .sidebar button {
-        display: block;
-        width: 100%;
-        text-align: left;
-        margin-bottom: var(--ddd-spacing-2);
-      }
-    `];
-  }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+  `;
 
   render() {
     return html`
-      <header class="header">
-        <div class="left">
-          <button class="menu-btn" @click=${this.toggleSidebar}>☰</button>
-          <div class="logo" @click=${() => this.emitNavigate("/")}>
-            Happy Volley FC
-          </div>
+      <div class="header">
+        <div class="brand" @click=${() => this.emitNavigate("/")}>
+          <button @click=${this.toggleSidebar} aria-label="Open menu">☰</button>
+          <span>Happy Volley FC</span>
         </div>
 
         <nav>
-          ${this.navItems.map(item => html`
-            <button
-              class="${this.currentRoute === item.path ? "active" : ""}"
-              @click=${() => this.emitNavigate(item.path)}
-            >
-              ${item.label}
-            </button>
-          `)}
-          <button @click=${this.toggleTheme}>
+          ${this.navItems.map(
+            (item) => html`
+              <button @click=${() => this.emitNavigate(item.path)}>
+                ${item.label}
+              </button>
+            `
+          )}
+          <button @click=${this.emitToggleTheme}>
             ${this.theme === "dark" ? "☀️ Light" : "🌙 Dark"}
           </button>
         </nav>
-      </header>
+      </div>
 
       <div class="sidebar ${this.sidebarOpen ? "open" : ""}">
-        ${this.navItems.map(item => html`
-          <button
-            class="${this.currentRoute === item.path ? "active" : ""}"
-            @click=${() => this.emitNavigate(item.path)}
-          >
-            ${item.label}
-          </button>
-        `)}
+        ${this.navItems.map(
+          (item) => html`
+            <button @click=${() => this.emitNavigate(item.path)}>
+              ${item.label}
+            </button>
+          `
+        )}
       </div>
     `;
   }
 }
 
 customElements.define(Project2Header.tag, Project2Header);
-
