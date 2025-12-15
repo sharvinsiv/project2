@@ -4,118 +4,111 @@
  * @license Apache-2.0, see LICENSE for full text.
  */
 import { LitElement, html, css } from "lit";
-import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-import "./project2-menu.js";
 
-export class Project2Header extends DDDSuper(LitElement) {
-  static get tag() { return "project2-header"; }
-
-  static get properties() {
-    return { ...super.properties, currentPage: { type: String }, menuOpen: { type: Boolean } };
+export class Project2Header extends LitElement {
+  static get tag() {
+    return "project2-header";
   }
 
-  constructor() {
-    super();
-    this.currentPage = "home";
-    this.menuOpen = false;
+  static styles = css`
+    header {
+      background: var(--accent-color);
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .menu-btn {
+      font-size: 20px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .logo {
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 18px;
+      user-select: none;
+    }
+
+    nav {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    button:hover {
+      text-decoration: underline;
+    }
+
+    .theme-toggle {
+      border: 1px solid white;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 14px;
+    }
+  `;
+
+  nav(route) {
+    this.dispatchEvent(
+      new CustomEvent("navigate", {
+        detail: route,
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
-  static get styles() {
-    return [super.styles, css`
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: var(--ddd-spacing-4) var(--ddd-spacing-6);
-        background: var(--hv-surface);
-        border-bottom: 1px solid rgba(0,0,0,0.08);
-      }
-
-      .left {
-        display: flex;
-        align-items: center;
-        gap: var(--ddd-spacing-3);
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: var(--ddd-spacing-2);
-        cursor: pointer;
-        user-select: none;
-      }
-
-      .brand img {
-        width: 40px;
-        height: 40px;
-        border-radius: 999px;
-        object-fit: cover;
-      }
-
-      .brand-title {
-        font-size: var(--ddd-font-size-l);
-        font-weight: 700;
-        letter-spacing: 0.2px;
-      }
-
-      button {
-        font-family: var(--ddd-font-navigation);
-        border: none;
-        background: transparent;
-        cursor: pointer;
-        padding: var(--ddd-spacing-2) var(--ddd-spacing-3);
-        border-radius: var(--ddd-radius-sm);
-      }
-
-      button:hover {
-        background: rgba(0,0,0,0.06);
-      }
-
-      .menuBtn {
-        font-weight: 700;
-      }
-    `];
+  toggleTheme() {
+    this.dispatchEvent(
+      new CustomEvent("toggle-theme", { bubbles: true, composed: true })
+    );
   }
 
-  _goHome() {
-    this.dispatchEvent(new CustomEvent("navigate", {
-      detail: { page: "home" }, bubbles: true, composed: true
-    }));
-    this.menuOpen = false;
-  }
-
-  _toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  _navigateFromMenu(e) {
-    const page = e.detail?.page;
-    if (!page) return;
-    this.dispatchEvent(new CustomEvent("navigate", {
-      detail: { page }, bubbles: true, composed: true
-    }));
-    this.menuOpen = false;
+  toggleMenu() {
+    this.dispatchEvent(
+      new CustomEvent("toggle-menu", { bubbles: true, composed: true })
+    );
   }
 
   render() {
     return html`
       <header>
         <div class="left">
-          <button class="menuBtn" @click=${this._toggleMenu}>☰ Menu</button>
-
-          <div class="brand" @click=${this._goHome} title="Back to Home">
-            <!-- Put your AI-generated logo at /assets/happy-volley-logo.png -->
-            <img src="/assets/happy-volley-logo.png" alt="Happy Volley FC logo" />
-            <div class="brand-title">Happy Volley FC</div>
-          </div>
+          <button class="menu-btn" @click=${this.toggleMenu}>☰</button>
+          <div class="logo" @click=${() => this.nav("home")}>Happy Volley FC</div>
         </div>
-      </header>
 
-      <project2-menu
-        ?open=${this.menuOpen}
-        .currentPage=${this.currentPage}
-        @navigate=${this._navigateFromMenu}>
-      </project2-menu>
+        <nav>
+          <button @click=${() => this.nav("home")}>Home</button>
+          <button @click=${() => this.nav("schedule")}>Schedule</button>
+          <button @click=${() => this.nav("roster")}>Roster</button>
+          <button @click=${() => this.nav("stats")}>Stats</button>
+          <button @click=${() => this.nav("standings")}>Standings</button>
+          <button @click=${() => this.nav("join")}>Join Us</button>
+          <button class="theme-toggle" @click=${this.toggleTheme}>🌙 / ☀️</button>
+        </nav>
+      </header>
     `;
   }
 }
