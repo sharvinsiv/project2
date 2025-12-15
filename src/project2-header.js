@@ -4,85 +4,91 @@
  * @license Apache-2.0, see LICENSE for full text.
  */
 import { LitElement, html, css } from "lit";
+import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
-export class Project2Header extends LitElement {
+export class Project2Header extends DDDSuper(LitElement) {
   static get tag() {
     return "project2-header";
   }
 
-  static styles = css`
-    header {
-      background: var(--accent-color);
-      color: white;
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+  constructor() {
+    super();
+    this.currentRoute = "/";
+    this.navItems = [];
+  }
 
-    .left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+  static get properties() {
+    return {
+      ...super.properties,
+      currentRoute: { type: String },
+      navItems: { type: Array }
+    };
+  }
 
-    .menu-btn {
-      font-size: 20px;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
+  connectedCallback() {
+    super.connectedCallback();
+    this.loadMenu();
+  }
 
-    .logo {
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 18px;
+  async loadMenu() {
+    try {
+      const res = await fetch("/api/menu");
+      const data = await res.json();
+      this.navItems = data.items;
+    } catch (e) {
+      console.error("Failed to load menu", e);
     }
+  }
 
-    nav {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
+  static get styles() {
+    return [super.styles, css`
+      :host {
+        display: block;
+        background-color: #1b5e20;
+        color: #ffffff;
+      }
 
-    button {
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-      font-size: 15px;
-    }
+      .header-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
 
-    button:hover {
-      text-decoration: underline;
-    }
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #81c784;
+        cursor: pointer;
+      }
 
-    .theme-toggle {
-      border: 1px solid white;
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-size: 14px;
-    }
-  `;
+      nav {
+        display: flex;
+        gap: 12px;
+      }
 
-  nav(route) {
+      .nav-link {
+        text-decoration: none;
+        color: #ffffff;
+        padding: 6px 12px;
+        border-radius: 6px;
+        transition: background 0.3s;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        background-color: #81c784;
+        color: #000000;
+      }
+    `];
+  }
+
+  handleClick(e, path) {
+    e.preventDefault();
     this.dispatchEvent(new CustomEvent("navigate", {
-      detail: route,
-      bubbles: true,
-      composed: true
-    }));
-  }
-
-  toggleTheme() {
-    this.dispatchEvent(new CustomEvent("toggle-theme", {
-      bubbles: true,
-      composed: true
-    }));
-  }
-
-  toggleMenu() {
-    this.dispatchEvent(new CustomEvent("toggle-menu", {
+      detail: { path },
       bubbles: true,
       composed: true
     }));
@@ -90,24 +96,22 @@ export class Project2Header extends LitElement {
 
   render() {
     return html`
-      <header>
-        <div class="left">
-          <button class="menu-btn" @click=${this.toggleMenu}>☰</button>
-          <div class="logo" @click=${() => this.nav("home")}>
-            Happy Volley FC
-          </div>
+      <div class="header-wrapper">
+        <div class="logo" @click=${(e) => this.handleClick(e, "/")}>
+          Happy Volley FC
         </div>
-
         <nav>
-          <button @click=${() => this.nav("home")}>Home</button>
-          <button @click=${() => this.nav("schedule")}>Schedule</button>
-          <button @click=${() => this.nav("roster")}>Roster</button>
-          <button @click=${() => this.nav("stats")}>Stats</button>
-          <button @click=${() => this.nav("standings")}>Standings</button>
-          <button @click=${() => this.nav("join")}>Join Us</button>
-          <button class="theme-toggle" @click=${this.toggleTheme}>🌙 / ☀️</button>
+          ${this.navItems.map(item => html`
+            <a
+              href="${item.path}"
+              class="nav-link ${this.currentRoute === item.path ? "active" : ""}"
+              @click=${(e) => this.handleClick(e, item.path)}
+            >
+              ${item.label}
+            </a>
+          `)}
         </nav>
-      </header>
+      </div>
     `;
   }
 }
