@@ -4,111 +4,131 @@
  * @license Apache-2.0, see LICENSE for full text.
  */
 import { LitElement, html, css } from "lit";
+import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
-export class Project2Header extends LitElement {
+export class Project2Header extends DDDSuper(LitElement) {
   static get tag() {
     return "project2-header";
   }
 
-  static styles = css`
-    header {
-      background: var(--accent-color);
-      color: white;
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+  static properties = {
+    open: { type: Boolean },
+  };
 
-    .left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+  constructor() {
+    super();
+    this.open = false;
+  }
 
-    .menu-btn {
-      font-size: 20px;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
+  static styles = [
+    super.styles,
+    css`
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--ddd-spacing-4);
+        background: var(--ddd-theme-default-potentialMidnight);
+        color: var(--ddd-theme-default-roarLight);
+      }
 
-    .logo {
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 18px;
-      user-select: none;
-    }
+      .left {
+        display: flex;
+        align-items: center;
+        gap: var(--ddd-spacing-3);
+      }
 
-    nav {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: var(--ddd-spacing-2);
+        font-family: var(--ddd-font-navigation);
+        font-weight: bold;
+        cursor: pointer;
+      }
 
-    button {
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-      font-size: 15px;
-    }
+      .logo img {
+        height: 42px;
+        width: 42px;
+      }
 
-    button:hover {
-      text-decoration: underline;
-    }
+      button {
+        background: none;
+        border: none;
+        color: inherit;
+        font-size: var(--ddd-font-size-m);
+        cursor: pointer;
+      }
 
-    .theme-toggle {
-      border: 1px solid white;
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-size: 14px;
-    }
-  `;
+      nav {
+        display: flex;
+        gap: var(--ddd-spacing-4);
+      }
+
+      .menu {
+        display: none;
+        flex-direction: column;
+        gap: var(--ddd-spacing-2);
+        padding: var(--ddd-spacing-4);
+        background: var(--ddd-theme-default-roarLight);
+        color: var(--ddd-theme-default-potentialMidnight);
+      }
+
+      .menu[open] {
+        display: flex;
+      }
+    `,
+  ];
 
   nav(route) {
     this.dispatchEvent(
       new CustomEvent("navigate", {
-        detail: route,
+        detail: { path: `/${route === "home" ? "" : route}` },
         bubbles: true,
         composed: true,
       })
     );
   }
 
-  toggleTheme() {
-    this.dispatchEvent(
-      new CustomEvent("toggle-theme", { bubbles: true, composed: true })
-    );
-  }
-
   toggleMenu() {
-    this.dispatchEvent(
-      new CustomEvent("toggle-menu", { bubbles: true, composed: true })
-    );
+    this.open = !this.open;
   }
 
   render() {
     return html`
       <header>
         <div class="left">
-          <button class="menu-btn" @click=${this.toggleMenu}>☰</button>
-          <div class="logo" @click=${() => this.nav("home")}>Happy Volley FC</div>
+          <button @click=${this.toggleMenu}>☰</button>
+
+          <div class="logo" @click=${() => this.nav("home")}>
+            <img
+              src="data:image/svg+xml;utf8,
+              <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+                <circle cx='50' cy='50' r='48' fill='%232563eb'/>
+                <polygon points='50,15 65,40 90,40 70,58 78,85 50,68 22,85 30,58 10,40 35,40'
+                  fill='white'/>
+              </svg>"
+              alt="Happy Volley FC logo"
+            />
+            Happy Volley FC
+          </div>
         </div>
 
         <nav>
-          <button @click=${() => this.nav("home")}>Home</button>
           <button @click=${() => this.nav("schedule")}>Schedule</button>
           <button @click=${() => this.nav("roster")}>Roster</button>
           <button @click=${() => this.nav("stats")}>Stats</button>
           <button @click=${() => this.nav("standings")}>Standings</button>
-          <button @click=${() => this.nav("join")}>Join Us</button>
-          <button class="theme-toggle" @click=${this.toggleTheme}>🌙 / ☀️</button>
         </nav>
       </header>
+
+      <div class="menu" ?open=${this.open}>
+        <button @click=${() => this.nav("home")}>Home</button>
+        <button @click=${() => this.nav("schedule")}>Schedule</button>
+        <button @click=${() => this.nav("roster")}>Roster</button>
+        <button @click=${() => this.nav("stats")}>Stats</button>
+        <button @click=${() => this.nav("standings")}>Standings</button>
+      </div>
     `;
   }
 }
