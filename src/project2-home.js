@@ -132,7 +132,7 @@ export class Project2Home extends DDDSuper(LitElement) {
       <!-- HERO IMAGE -->
       <section class="hero">
         <img
-          src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6"
+          src="https://gopsusports.com/imgproxy/t9mhvu1JWLtLx24u_Ghvxd5lfuckbjylo6sdFBT9O-U/rs:fit:1980:0:0:0/g:ce:0:0/q:90/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2dvcHN1c3BvcnRzLXByb2QvMjAyMy8wOC8wMi9zVDVFalVBZTY0M1dwU1g1cmg0a1dmR3NkbEd0aGczWHA2eUwwNUtuLmpwZw.jpg"
           alt="Happy Volley FC team photo"
         />
       </section>
