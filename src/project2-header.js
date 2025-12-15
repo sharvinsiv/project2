@@ -7,10 +7,6 @@
  * Copyright 2025 sharvinsiv
  * @license Apache-2.0
  */
-/**
- * Copyright 2025 sharvinsiv
- * @license Apache-2.0
- */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
@@ -30,7 +26,7 @@ export class Project2Header extends DDDSuper(LitElement) {
 
   constructor() {
     super();
-    this.currentRoute = "/";
+    this.currentRoute = window.location.pathname || "/";
     this.navItems = [];
     this.sidebarOpen = false;
   }
@@ -44,7 +40,7 @@ export class Project2Header extends DDDSuper(LitElement) {
     try {
       const res = await fetch("/api/menu");
       const data = await res.json();
-      this.navItems = data.items;
+      this.navItems = data.items || [];
     } catch (e) {
       console.error("Failed to load menu", e);
     }
@@ -78,6 +74,7 @@ export class Project2Header extends DDDSuper(LitElement) {
         font-weight: bold;
         color: #81c784;
         cursor: pointer;
+        user-select: none;
       }
 
       nav {
@@ -127,11 +124,19 @@ export class Project2Header extends DDDSuper(LitElement) {
   }
 
   navigate(path) {
-    this.dispatchEvent(new CustomEvent("navigate", {
-      detail: { path },
-      bubbles: true,
-      composed: true
-    }));
+    // 🔑 THIS is what was missing before
+    window.history.pushState({}, "", path);
+
+    this.currentRoute = path;
+
+    this.dispatchEvent(
+      new CustomEvent("navigate", {
+        detail: { path },
+        bubbles: true,
+        composed: true
+      })
+    );
+
     this.sidebarOpen = false;
   }
 
@@ -144,6 +149,7 @@ export class Project2Header extends DDDSuper(LitElement) {
       <div class="header-wrapper">
         <div class="left">
           <button class="menu-btn" @click=${this.toggleSidebar}>☰</button>
+
           <div class="logo" @click=${() => this.navigate("/")}>
             Happy Volley FC
           </div>
