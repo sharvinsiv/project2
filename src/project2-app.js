@@ -14,15 +14,27 @@ import "./project2-stats.js";
 import "./project2-standings.js";
 
 export class Project2App extends DDDSuper(LitElement) {
-static get tag() {
-return "project2-app";
+static get tag() { return "project2-app"; }
+
+static styles = css`
+:host {
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+background: #1b1b1b;
+color: white;
 }
 
-static get properties() {
-return {
-route: { type: String }
-};
+main {
+flex: 1;
+padding: 32px;
+max-width: 1100px;
+margin: 0 auto;
+width: 100%;
 }
+`;
+
+static properties = { route: { type: String } };
 
 constructor() {
 super();
@@ -46,12 +58,10 @@ default: return html`<project2-home></project2-home>`;
 render() {
 return html`
 <project2-header @navigate=${this.navigate}></project2-header>
-<main>
-${this.renderPage()}
-</main>
+<main>${this.renderPage()}</main>
 <project2-footer></project2-footer>
 `;
 }
 }
 
-globalThis.customElements.define(Project2App.tag, Project2App);
+customElements.define(Project2App.tag, Project2App);
