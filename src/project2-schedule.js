@@ -11,16 +11,16 @@ export class Project2Schedule extends DDDSuper(LitElement) {
     return "project2-schedule";
   }
 
-  constructor() {
-    super();
-    this.games = [];
-  }
-
   static get properties() {
     return {
       ...super.properties,
       games: { type: Array }
     };
+  }
+
+  constructor() {
+    super();
+    this.games = [];
   }
 
   connectedCallback() {
@@ -31,42 +31,38 @@ export class Project2Schedule extends DDDSuper(LitElement) {
   async loadSchedule() {
     try {
       const res = await fetch("/api/schedule");
-      this.games = await res.json();
+      const data = await res.json();
+      this.games = data.games || [];
     } catch (e) {
-      console.error("Failed to load schedule", e);
+      console.error("Schedule API failed", e);
+      this.games = [];
     }
   }
 
   static get styles() {
     return [super.styles, css`
-      :host {
-        display: block;
-        font-family: 'Poppins', sans-serif;
-      }
-
       h1 {
-        color: #1b5e20;
-        margin-bottom: 24px;
+        margin-bottom: var(--ddd-spacing-4);
       }
 
-      .games-list {
+      .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--ddd-spacing-4);
       }
     `];
   }
 
   render() {
     return html`
-      <h1>Schedule</h1>
-      <div class="games-list">
+      <h1>Upcoming Matches</h1>
+      <div class="grid">
         ${this.games.map(game => html`
           <project2-game-card
-            .date=${game.date}
-            .opponent=${game.opponent}
-            .location=${game.location}
-            .time=${game.time}
+            .date="${game.date}"
+            .opponent="${game.opponent}"
+            .location="${game.location}"
+            .time="${game.time}"
           ></project2-game-card>
         `)}
       </div>
