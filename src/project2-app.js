@@ -11,6 +11,7 @@ import "./project2-schedule.js";
 import "./project2-roster.js";
 import "./project2-stats.js";
 import "./project2-standings.js";
+import "./project2-join.js";
 import "./project2-footer.js";
 
 export class Project2App extends DDDSuper(LitElement) {
@@ -29,80 +30,29 @@ export class Project2App extends DDDSuper(LitElement) {
   constructor() {
     super();
 
-    // Routing
+    // Initial route
     this.route = window.location.pathname || "/";
+
+    // Browser navigation
     window.addEventListener("popstate", () => {
       this.route = window.location.pathname || "/";
     });
 
-    // Theme (default)
+    // Theme default (kept as-is)
     this.theme = "light";
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    // Inject ONE global theme stylesheet (works with shadow DOM)
-    this.ensureGlobalThemeStyles();
-
-    // Apply theme on first load
-    this.applyTheme(this.theme);
-  }
-
-  ensureGlobalThemeStyles() {
-    const id = "happy-volley-global-theme";
-    if (document.getElementById(id)) return;
-
-    const style = document.createElement("style");
-    style.id = id;
-    style.textContent = `
-      /* Light */
-      html[data-theme="light"] {
-        --hv-bg: var(--ddd-theme-default-roarLight);
-        --hv-text: var(--ddd-theme-default-potentialMidnight);
-        --hv-surface: #ffffff;
-        --hv-border: rgba(0,0,0,0.12);
-      }
-
-      /* Dark */
-      html[data-theme="dark"] {
-        --hv-bg: var(--ddd-theme-default-potentialMidnight);
-        --hv-text: var(--ddd-theme-default-roarLight);
-        --hv-surface: #1b1b1b;
-        --hv-border: rgba(255,255,255,0.16);
-      }
-
-      /* Apply globally */
-      html, body {
-        background: var(--hv-bg) !important;
-        color: var(--hv-text) !important;
-        font-family: var(--ddd-font-navigation) !important;
-        margin: 0;
-      }
-
-      /* Make common “surface” areas look right in both themes */
-      main, section, table, .card, figure {
-        color: var(--hv-text);
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  applyTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute("data-theme", "light");
   }
 
   handleNavigation(e) {
     if (!e.detail?.path) return;
+
     this.route = e.detail.path;
     window.history.pushState({}, "", e.detail.path);
   }
 
   toggleTheme() {
     this.theme = this.theme === "light" ? "dark" : "light";
-    this.applyTheme(this.theme);
-    // Force re-render so header button label updates
-    this.requestUpdate();
+    document.documentElement.setAttribute("data-theme", this.theme);
   }
 
   renderPage() {
@@ -115,6 +65,8 @@ export class Project2App extends DDDSuper(LitElement) {
         return html`<project2-stats></project2-stats>`;
       case "/standings":
         return html`<project2-standings></project2-standings>`;
+      case "/join":
+        return html`<project2-join></project2-join>`;
       case "/":
       default:
         return html`<project2-home></project2-home>`;
@@ -128,9 +80,6 @@ export class Project2App extends DDDSuper(LitElement) {
         :host {
           display: block;
           min-height: 100vh;
-          background: var(--hv-bg);
-          color: var(--hv-text);
-          font-family: var(--ddd-font-navigation);
         }
 
         main {
@@ -151,7 +100,9 @@ export class Project2App extends DDDSuper(LitElement) {
         @toggle-theme="${this.toggleTheme}"
       ></project2-header>
 
-      <main>${this.renderPage()}</main>
+      <main>
+        ${this.renderPage()}
+      </main>
 
       <project2-footer></project2-footer>
     `;
@@ -159,4 +110,3 @@ export class Project2App extends DDDSuper(LitElement) {
 }
 
 customElements.define(Project2App.tag, Project2App);
-
