@@ -7,91 +7,113 @@ import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
 import "./project2-header.js";
 import "./project2-footer.js";
+import "./project2-sidebar.js";
 import "./project2-home.js";
 import "./project2-schedule.js";
 import "./project2-roster.js";
 import "./project2-stats.js";
 import "./project2-standings.js";
 import "./project2-join.js";
-import "./project2-parent-info.js";
-import "./project2-contact.js";
 
 export class Project2App extends DDDSuper(LitElement) {
-  static get tag() { return "project2-app"; }
+  static get tag() {
+    return "project2-app";
+  }
 
   static get properties() {
-    return { ...super.properties, page: { type: String } };
+    return {
+      route: { type: String },
+      theme: { type: String },
+      menuOpen: { type: Boolean },
+    };
   }
 
   constructor() {
     super();
-    this.page = this._getPageFromUrl();
-    window.addEventListener("popstate", () => {
-      this.page = this._getPageFromUrl();
-    });
+    this.route = "home";
+    this.theme = "light";
+    this.menuOpen = false;
+    this.setAttribute("theme", this.theme);
   }
 
-  static get styles() {
-    return [super.styles, css`
-      :host {
-        /* Brand palette (built from DDD tokens) */
-        --hv-bg: var(--ddd-theme-default-roarLight);
-        --hv-text: var(--ddd-theme-default-potentialMidnight);
-        --hv-accent: var(--ddd-theme-default-inventOrange);
-        --hv-surface: var(--ddd-theme-default-shrineTan);
+  static styles = css`
+    :host {
+      /* LIGHT MODE */
+      --bg-color: #f9fafb;
+      --text-color: #111827;
+      --accent-color: #2563eb;
+      --card-bg: #ffffff;
+    }
 
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        background: var(--hv-bg);
-        color: var(--hv-text);
-        font-family: var(--ddd-font-navigation);
-      }
+    :host([theme="dark"]) {
+      /* DARK MODE */
+      --bg-color: #0f172a;
+      --text-color: #f8fafc;
+      --accent-color: #60a5fa;
+      --card-bg: #020617;
+    }
 
-      main {
-        flex: 1;
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: var(--ddd-spacing-6);
-      }
-    `];
+    :host {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    main {
+      flex: 1;
+      padding: 56px 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+  `;
+
+  navigate(e) {
+    this.route = e.detail;
+    this.menuOpen = false;
   }
 
-  _getPageFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("page") || "home";
+  toggleTheme() {
+    this.theme = this.theme === "light" ? "dark" : "light";
+    this.setAttribute("theme", this.theme);
   }
 
-  _setPage(page) {
-    const url = new URL(window.location.href);
-    url.searchParams.set("page", page);
-    window.history.pushState({}, "", url.toString());
-    this.page = page;
-  }
-
-  handleNavigate(e) {
-    if (e.detail?.page) this._setPage(e.detail.page);
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 
   renderPage() {
-    switch (this.page) {
-      case "schedule": return html`<project2-schedule></project2-schedule>`;
-      case "roster": return html`<project2-roster></project2-roster>`;
-      case "stats": return html`<project2-stats></project2-stats>`;
-      case "standings": return html`<project2-standings></project2-standings>`;
-      case "join": return html`<project2-join></project2-join>`;
-      case "parent-info": return html`<project2-parent-info></project2-parent-info>`;
-      case "contact": return html`<project2-contact></project2-contact>`;
-      default: return html`<project2-home @navigate=${this.handleNavigate}></project2-home>`;
+    switch (this.route) {
+      case "schedule":
+        return html`<project2-schedule></project2-schedule>`;
+      case "roster":
+        return html`<project2-roster></project2-roster>`;
+      case "stats":
+        return html`<project2-stats></project2-stats>`;
+      case "standings":
+        return html`<project2-standings></project2-standings>`;
+      case "join":
+        return html`<project2-join></project2-join>`;
+      default:
+        return html`<project2-home></project2-home>`;
     }
   }
 
   render() {
     return html`
+      <project2-sidebar ?open=${this.menuOpen} @navigate=${this.navigate}>
+      </project2-sidebar>
+
       <project2-header
-        .currentPage=${this.page}
-        @navigate=${this.handleNavigate}>
+        @navigate=${this.navigate}
+        @toggle-theme=${this.toggleTheme}
+        @toggle-menu=${this.toggleMenu}
+      >
       </project2-header>
 
       <main>${this.renderPage()}</main>
