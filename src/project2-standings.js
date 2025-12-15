@@ -54,7 +54,7 @@ export class Project2Standings extends DDDSuper(LitElement) {
               <th>Team</th>
               <th>Wins</th>
               <th>Losses</th>
-              <th>Ties</th>
+              <th>Draws</th>
             </tr>
           </thead>
           <tbody>
