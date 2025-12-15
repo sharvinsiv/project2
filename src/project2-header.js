@@ -15,7 +15,7 @@ static get styles() {
 return [super.styles, css`
 header {
 background: var(--project2-green);
-color: white;
+color: #1b1b1b;
 padding: 16px;
 display: flex;
 justify-content: space-between;
