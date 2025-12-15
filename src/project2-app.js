@@ -35,9 +35,61 @@ export class Project2App extends DDDSuper(LitElement) {
       this.route = window.location.pathname || "/";
     });
 
-    // Theme
+    // Theme (default)
     this.theme = "light";
-    document.documentElement.setAttribute("data-theme", "light");
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    // Inject ONE global theme stylesheet (works with shadow DOM)
+    this.ensureGlobalThemeStyles();
+
+    // Apply theme on first load
+    this.applyTheme(this.theme);
+  }
+
+  ensureGlobalThemeStyles() {
+    const id = "happy-volley-global-theme";
+    if (document.getElementById(id)) return;
+
+    const style = document.createElement("style");
+    style.id = id;
+    style.textContent = `
+      /* Light */
+      html[data-theme="light"] {
+        --hv-bg: var(--ddd-theme-default-roarLight);
+        --hv-text: var(--ddd-theme-default-potentialMidnight);
+        --hv-surface: #ffffff;
+        --hv-border: rgba(0,0,0,0.12);
+      }
+
+      /* Dark */
+      html[data-theme="dark"] {
+        --hv-bg: var(--ddd-theme-default-potentialMidnight);
+        --hv-text: var(--ddd-theme-default-roarLight);
+        --hv-surface: #1b1b1b;
+        --hv-border: rgba(255,255,255,0.16);
+      }
+
+      /* Apply globally */
+      html, body {
+        background: var(--hv-bg) !important;
+        color: var(--hv-text) !important;
+        font-family: var(--ddd-font-navigation) !important;
+        margin: 0;
+      }
+
+      /* Make common “surface” areas look right in both themes */
+      main, section, table, .card, figure {
+        color: var(--hv-text);
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
   }
 
   handleNavigation(e) {
@@ -48,7 +100,9 @@ export class Project2App extends DDDSuper(LitElement) {
 
   toggleTheme() {
     this.theme = this.theme === "light" ? "dark" : "light";
-    document.documentElement.setAttribute("data-theme", this.theme);
+    this.applyTheme(this.theme);
+    // Force re-render so header button label updates
+    this.requestUpdate();
   }
 
   renderPage() {
@@ -61,6 +115,7 @@ export class Project2App extends DDDSuper(LitElement) {
         return html`<project2-stats></project2-stats>`;
       case "/standings":
         return html`<project2-standings></project2-standings>`;
+      case "/":
       default:
         return html`<project2-home></project2-home>`;
     }
@@ -70,25 +125,11 @@ export class Project2App extends DDDSuper(LitElement) {
     return [
       super.styles,
       css`
-        /* LIGHT THEME */
-        :root {
-          --bg: var(--ddd-theme-default-roarLight);
-          --text: var(--ddd-theme-default-potentialMidnight);
-          --card: #ffffff;
-        }
-
-        /* DARK THEME */
-        html[data-theme="dark"] {
-          --bg: var(--ddd-theme-default-potentialMidnight);
-          --text: var(--ddd-theme-default-roarLight);
-          --card: #1f1f1f;
-        }
-
         :host {
           display: block;
           min-height: 100vh;
-          background: var(--bg);
-          color: var(--text);
+          background: var(--hv-bg);
+          color: var(--hv-text);
           font-family: var(--ddd-font-navigation);
         }
 
@@ -110,9 +151,7 @@ export class Project2App extends DDDSuper(LitElement) {
         @toggle-theme="${this.toggleTheme}"
       ></project2-header>
 
-      <main>
-        ${this.renderPage()}
-      </main>
+      <main>${this.renderPage()}</main>
 
       <project2-footer></project2-footer>
     `;
@@ -120,3 +159,4 @@ export class Project2App extends DDDSuper(LitElement) {
 }
 
 customElements.define(Project2App.tag, Project2App);
+
