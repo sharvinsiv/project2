@@ -31,7 +31,6 @@ export class Project2App extends DDDSuper(LitElement) {
 
     // Routing
     this.route = window.location.pathname || "/";
-
     window.addEventListener("popstate", () => {
       this.route = window.location.pathname || "/";
     });
@@ -43,7 +42,6 @@ export class Project2App extends DDDSuper(LitElement) {
 
   handleNavigation(e) {
     if (!e.detail?.path) return;
-
     this.route = e.detail.path;
     window.history.pushState({}, "", e.detail.path);
   }
@@ -63,7 +61,6 @@ export class Project2App extends DDDSuper(LitElement) {
         return html`<project2-stats></project2-stats>`;
       case "/standings":
         return html`<project2-standings></project2-standings>`;
-      case "/":
       default:
         return html`<project2-home></project2-home>`;
     }
@@ -73,31 +70,29 @@ export class Project2App extends DDDSuper(LitElement) {
     return [
       super.styles,
       css`
+        /* LIGHT THEME */
         :root {
-          --app-bg: var(--ddd-theme-default-roarLight);
-          --app-text: var(--ddd-theme-default-potentialMidnight);
+          --bg: var(--ddd-theme-default-roarLight);
+          --text: var(--ddd-theme-default-potentialMidnight);
+          --card: #ffffff;
         }
 
+        /* DARK THEME */
         html[data-theme="dark"] {
-          --app-bg: var(--ddd-theme-default-potentialMidnight);
-          --app-text: var(--ddd-theme-default-roarLight);
+          --bg: var(--ddd-theme-default-potentialMidnight);
+          --text: var(--ddd-theme-default-roarLight);
+          --card: #1f1f1f;
         }
 
         :host {
           display: block;
           min-height: 100vh;
-          background: var(--app-bg);
-          color: var(--app-text);
-        }
-
-        .layout {
-          display: flex;
-          flex-direction: column;
-          min-height: 100vh;
+          background: var(--bg);
+          color: var(--text);
+          font-family: var(--ddd-font-navigation);
         }
 
         main {
-          flex: 1;
           padding: var(--ddd-spacing-6);
           max-width: 1400px;
           margin: 0 auto;
@@ -108,20 +103,18 @@ export class Project2App extends DDDSuper(LitElement) {
 
   render() {
     return html`
-      <div class="layout">
-        <project2-header
-          .currentRoute="${this.route}"
-          .theme="${this.theme}"
-          @navigate="${this.handleNavigation}"
-          @toggle-theme="${this.toggleTheme}"
-        ></project2-header>
+      <project2-header
+        .currentRoute="${this.route}"
+        .theme="${this.theme}"
+        @navigate="${this.handleNavigation}"
+        @toggle-theme="${this.toggleTheme}"
+      ></project2-header>
 
-        <main>
-          ${this.renderPage()}
-        </main>
+      <main>
+        ${this.renderPage()}
+      </main>
 
-        <project2-footer></project2-footer>
-      </div>
+      <project2-footer></project2-footer>
     `;
   }
 }
