@@ -2,64 +2,97 @@
  * Copyright 2025 sharvinsiv 
  * @license Apache-2.0, see LICENSE for full text.
  */
+/**
+ * Copyright 2025 sharvinsiv
+ * @license Apache-2.0, see LICENSE for full text.
+ */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-import "./project2-upcoming-band.js";
+import "./project2-game-card.js";
 
 export class Project2Schedule extends DDDSuper(LitElement) {
-  static get tag() { return "project2-schedule"; }
-
-  static get properties() {
-    return { ...super.properties, games: { type: Array }, loading: { type: Boolean } };
+  static get tag() {
+    return "project2-schedule";
   }
 
   constructor() {
     super();
-    this.games = [];
-    this.loading = true;
+    this.games = [
+      {
+        date: "Dec 8",
+        opponent: "The Philadelphia Penalties",
+        location: "Away",
+        time: "3:00 PM",
+      },
+      {
+        date: "Dec 17",
+        opponent: "Harrisburg Handlers",
+        location: "Away",
+        time: "2:50 PM",
+      },
+      {
+        date: "Dec 26",
+        opponent: "Pittsburgh Riverhounds",
+        location: "Home",
+        time: "10:30 PM",
+      },
+    ];
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this._load();
-  }
-
-  async _load() {
-    try {
-      const res = await fetch("/api/schedule");
-      this.games = await res.json();
-    } catch (e) {
-      console.warn("schedule load failed", e);
-      this.games = [];
-    } finally {
-      this.loading = false;
-    }
+  static get properties() {
+    return {
+      ...super.properties,
+      games: { type: Array },
+    };
   }
 
   static get styles() {
-    return [super.styles, css`
-      h1 {
-        font-size: var(--ddd-font-size-xl);
-        margin-bottom: var(--ddd-spacing-4);
-      }
-      .sub {
-        margin-bottom: var(--ddd-spacing-5);
-        opacity: 0.9;
-      }
-    `];
+    return [
+      super.styles,
+      css`
+        :host {
+          display: block;
+        }
+
+        .schedule-container {
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        h1 {
+          color: #1b5e20;
+          font-size: 36px;
+          margin-bottom: 24px;
+        }
+
+        .games-list {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 20px;
+        }
+      `,
+    ];
   }
 
   render() {
     return html`
-      <h1>Schedule</h1>
-      <div class="sub">
-        Upcoming games for Happy Volley FC (loaded from <code>/api/schedule</code>).
-      </div>
+      <div class="schedule-container">
+        <h1>Season Schedule</h1>
 
-      ${this.loading
-        ? html`<div>Loading schedule…</div>`
-        : html`<project2-upcoming-band .games=${this.games}></project2-upcoming-band>`
-      }
+        <div class="games-list">
+          ${this.games.map(
+            (game) => html`
+              <project2-game-card
+                .date=${game.date}
+                .opponent=${game.opponent}
+                .location=${game.location}
+                .time=${game.time}
+              >
+              </project2-game-card>
+            `
+          )}
+        </div>
+      </div>
     `;
   }
 }
