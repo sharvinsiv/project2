@@ -3,10 +3,7 @@
  * Copyright 2025 sharvinsiv
  * @license Apache-2.0, see LICENSE for full text.
  */
-/**
- * Copyright 2025 sharvinsiv
- * @license Apache-2.0
- */
+
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
@@ -26,7 +23,7 @@ export class Project2Header extends DDDSuper(LitElement) {
 
   constructor() {
     super();
-    this.currentRoute = window.location.pathname || "/";
+    this.currentRoute = "/";
     this.navItems = [];
     this.sidebarOpen = false;
   }
@@ -56,8 +53,8 @@ export class Project2Header extends DDDSuper(LitElement) {
 
       .header-wrapper {
         display: flex;
-        align-items: center;
         justify-content: space-between;
+        align-items: center;
         padding: 16px;
         max-width: 1200px;
         margin: 0 auto;
@@ -74,7 +71,6 @@ export class Project2Header extends DDDSuper(LitElement) {
         font-weight: bold;
         color: #81c784;
         cursor: pointer;
-        user-select: none;
       }
 
       nav {
@@ -90,7 +86,6 @@ export class Project2Header extends DDDSuper(LitElement) {
         border-radius: 6px;
         font-size: 16px;
         cursor: pointer;
-        transition: background 0.2s;
       }
 
       button:hover,
@@ -103,7 +98,6 @@ export class Project2Header extends DDDSuper(LitElement) {
         font-size: 22px;
       }
 
-      /* Sidebar */
       .sidebar {
         background: #145a23;
         padding: 16px;
@@ -123,12 +117,7 @@ export class Project2Header extends DDDSuper(LitElement) {
     `];
   }
 
-  navigate(path) {
-    // 🔑 THIS is what was missing before
-    window.history.pushState({}, "", path);
-
-    this.currentRoute = path;
-
+  emitNavigate(path) {
     this.dispatchEvent(
       new CustomEvent("navigate", {
         detail: { path },
@@ -136,7 +125,6 @@ export class Project2Header extends DDDSuper(LitElement) {
         composed: true
       })
     );
-
     this.sidebarOpen = false;
   }
 
@@ -149,8 +137,7 @@ export class Project2Header extends DDDSuper(LitElement) {
       <div class="header-wrapper">
         <div class="left">
           <button class="menu-btn" @click=${this.toggleSidebar}>☰</button>
-
-          <div class="logo" @click=${() => this.navigate("/")}>
+          <div class="logo" @click=${() => this.emitNavigate("/")}>
             Happy Volley FC
           </div>
         </div>
@@ -159,7 +146,7 @@ export class Project2Header extends DDDSuper(LitElement) {
           ${this.navItems.map(item => html`
             <button
               class="${this.currentRoute === item.path ? "active" : ""}"
-              @click=${() => this.navigate(item.path)}
+              @click=${() => this.emitNavigate(item.path)}
             >
               ${item.label}
             </button>
@@ -171,7 +158,7 @@ export class Project2Header extends DDDSuper(LitElement) {
         ${this.navItems.map(item => html`
           <button
             class="${this.currentRoute === item.path ? "active" : ""}"
-            @click=${() => this.navigate(item.path)}
+            @click=${() => this.emitNavigate(item.path)}
           >
             ${item.label}
           </button>
@@ -182,4 +169,3 @@ export class Project2Header extends DDDSuper(LitElement) {
 }
 
 customElements.define(Project2Header.tag, Project2Header);
-
