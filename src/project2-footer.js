@@ -6,48 +6,50 @@ import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
 export class Project2Footer extends DDDSuper(LitElement) {
-  static get tag() { return "project2-footer"; }
+  static get tag() {
+    return "project2-footer";
+  }
 
   static get styles() {
     return [super.styles, css`
       footer {
-        margin-top: auto;
-        padding: var(--ddd-spacing-5);
-        background: var(--hv-surface);
-        border-top: 1px solid rgba(0,0,0,0.08);
-        font-family: var(--ddd-font-navigation);
+        background: var(--card-bg);
+        padding: 24px;
+        text-align: center;
+        border-top: 1px solid rgba(0,0,0,0.12);
       }
-      .wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: var(--ddd-spacing-4);
-        flex-wrap: wrap;
+
+      .social-links {
+        margin-bottom: 10px;
       }
+
       a {
-        color: var(--hv-accent);
+        color: var(--accent-color);
+        margin: 0 12px;
         text-decoration: none;
-        font-weight: 700;
+        font-weight: 600;
       }
-      a:hover { text-decoration: underline; }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      p {
+        margin: 0;
+        opacity: 0.85;
+      }
     `];
   }
 
   render() {
     return html`
       <footer>
-        <div class="wrap">
-          <div>© ${new Date().getFullYear()} Happy Volley FC</div>
-          <div>
-            <a href="https://hax.psu.edu/" target="_blank" rel="noopener noreferrer">Facebook</a>
-            &nbsp;•&nbsp;
-            <a href="https://hax.psu.edu/" target="_blank" rel="noopener noreferrer">Twitter</a>
-            &nbsp;•&nbsp;
-            <a href="https://hax.psu.edu/" target="_blank" rel="noopener noreferrer">Instagram</a>
-          </div>
+        <div class="social-links">
+          <a href="https://hax.psu.edu/" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href="https://hax.psu.edu/" target="_blank" rel="noopener noreferrer">Twitter</a>
+          <a href="https://hax.psu.edu/" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
+        <p>© 2025 Sharvin Sivarajah. All rights reserved.</p>
       </footer>
     `;
   }
