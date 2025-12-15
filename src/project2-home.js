@@ -2,10 +2,6 @@
  * Copyright 2025 sharvinsiv
  * @license Apache-2.0, see LICENSE for full text.
  */
-/**
- * Copyright 2025 sharvinsiv
- * @license Apache-2.0, see LICENSE for full text.
- */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
@@ -123,20 +119,11 @@ export class Project2Home extends DDDSuper(LitElement) {
       <section>
         <h1>Welcome to Happy Volley FC</h1>
         <p class="description">
-          Happy Volley FC is a youth soccer club dedicated to building strong
-          athletes and even stronger character. We believe soccer is more than
-          just a game — it is a way to teach teamwork, discipline, leadership,
-          and resilience.
-          <br /><br />
-          Through structured training sessions, competitive matches, and a
-          positive coaching environment, Happy Volley FC helps young athletes
-          grow their skills, confidence, and love for the sport. Whether it’s
-          game day excitement or hard work at practice, our club is committed
-          to creating a fun, safe, and motivating experience for every player.
+          Happy Volley FC is a competitive youth soccer club dedicated to developing well rounded athletes through a strong commitment to teamwork, discipline, and a genuine love for the game. We provide a structured and supportive environment where players are challenged to grow technically, tactically, and mentally while learning the value of hard work and accountability. Our club believes that success on the field begins with strong character off the field. Through consistent training, thoughtful coaching, and a focus on personal development, we help young athletes build confidence, resilience, and leadership skills that extend beyond soccer. Players are encouraged to compete with intensity, respect the game, and support their teammates in every situation. At Happy Volley FC, representing the club is a responsibility we take seriously. Our athletes are taught to play with pride, give maximum effort, and uphold high standards of sportsmanship at all times. By fostering a culture of growth, respect, and passion, we aim to prepare our players not only for the next level of soccer but also for long term success in life.
+
         </p>
       </section>
 
-      <!-- HERO IMAGE -->
       <section class="hero-image">
         <img
           src="https://gopsusports.com/imgproxy/t9mhvu1JWLtLx24u_Ghvxd5lfuckbjylo6sdFBT9O-U/rs:fit:1980:0:0:0/g:ce:0:0/q:90/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2dvcHN1c3BvcnRzLXByb2QvMjAyMy8wOC8wMi9zVDVFalVBZTY0M1dwU1g1cmg0a1dmR3NkbEd0aGczWHA2eUwwNUtuLmpwZw.jpg"
@@ -144,7 +131,6 @@ export class Project2Home extends DDDSuper(LitElement) {
         />
       </section>
 
-      <!-- GALLERY -->
       <section>
         <h2>Team Gallery</h2>
         <div class="gallery">
@@ -165,7 +151,6 @@ export class Project2Home extends DDDSuper(LitElement) {
         </div>
       </section>
 
-      <!-- SPONSORS -->
       <section>
         <h2>Our Sponsors</h2>
         <div class="sponsors">
