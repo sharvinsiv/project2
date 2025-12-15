@@ -93,8 +93,8 @@ export class Project2Schedule extends DDDSuper(LitElement) {
         ${this.games.map(game => html`
           <div class="card">
             <div class="opponent">vs ${game.opponent}</div>
-            <div class="meta">Date ${game.date}</div>
-            <div class="meta">Time ${game.time}</div>
+            <div class="meta">Date: ${game.date}</div>
+            <div class="meta">Time: ${game.time}</div>
             <div class="location">${game.location}</div>
           </div>
         `)}
