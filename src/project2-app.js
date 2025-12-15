@@ -19,40 +19,33 @@ export class Project2App extends DDDSuper(LitElement) {
     return "project2-app";
   }
 
-  static get properties() {
-    return {
-      ...super.properties,
-      route: { type: String },
-      theme: { type: String }
-    };
-  }
+  static properties = {
+    route: { type: String },
+    theme: { type: String }
+  };
 
   constructor() {
     super();
-
-    // Initial route
     this.route = window.location.pathname || "/";
+    this.theme = "dark";
 
-    // Browser navigation
+    document.documentElement.setAttribute("data-theme", this.theme);
+
     window.addEventListener("popstate", () => {
       this.route = window.location.pathname || "/";
     });
-
-    // Theme default (kept as-is)
-    this.theme = "light";
-    document.documentElement.setAttribute("data-theme", "light");
   }
 
   handleNavigation(e) {
     if (!e.detail?.path) return;
-
     this.route = e.detail.path;
     window.history.pushState({}, "", e.detail.path);
   }
 
   toggleTheme() {
-    this.theme = this.theme === "light" ? "dark" : "light";
+    this.theme = this.theme === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", this.theme);
+    this.requestUpdate();
   }
 
   renderPage() {
@@ -67,37 +60,51 @@ export class Project2App extends DDDSuper(LitElement) {
         return html`<project2-standings></project2-standings>`;
       case "/join":
         return html`<project2-join></project2-join>`;
-      case "/":
       default:
         return html`<project2-home></project2-home>`;
     }
   }
 
-  static get styles() {
-    return [
-      super.styles,
-      css`
-        :host {
-          display: block;
-          min-height: 100vh;
-        }
+  static styles = [
+    css`
+      :host {
+        display: block;
+        min-height: 100vh;
+        background: var(--app-bg);
+        color: var(--text-color);
+        font-family: var(--ddd-font-navigation);
+      }
 
-        main {
-          padding: var(--ddd-spacing-6);
-          max-width: 1400px;
-          margin: 0 auto;
-        }
-      `
-    ];
-  }
+      main {
+        padding: var(--ddd-spacing-6);
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      /* LIGHT MODE */
+      :root[data-theme="light"] {
+        --app-bg: #f5f7f6;
+        --text-color: #111;
+        --card-bg: #ffffff;
+        --accent-color: var(--ddd-theme-default-landgrantGreen);
+      }
+
+      /* DARK MODE */
+      :root[data-theme="dark"] {
+        --app-bg: #1b1b1b;
+        --text-color: #f5f5f5;
+        --card-bg: #2a2a2a;
+        --accent-color: var(--ddd-theme-default-landgrantGreen);
+      }
+    `
+  ];
 
   render() {
     return html`
       <project2-header
-        .currentRoute="${this.route}"
-        .theme="${this.theme}"
-        @navigate="${this.handleNavigation}"
-        @toggle-theme="${this.toggleTheme}"
+        .theme=${this.theme}
+        @navigate=${this.handleNavigation}
+        @toggle-theme=${this.toggleTheme}
       ></project2-header>
 
       <main>
