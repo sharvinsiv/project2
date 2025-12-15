@@ -8,7 +8,7 @@ export class Project2Join extends DDDSuper(LitElement) {
 
   static properties = {
     submitted: { type: Boolean },
-    error: { type: String },
+    error: { type: String }
   };
 
   constructor() {
@@ -18,24 +18,45 @@ export class Project2Join extends DDDSuper(LitElement) {
   }
 
   static styles = css`
-    .container { max-width: 620px; margin: 0 auto; }
-    h1 { color: var(--accent-color); margin-bottom: 8px; }
-    p { margin-bottom: 24px; line-height: 1.6; opacity: 0.9; }
+    .container {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: var(--accent-color);
+      margin-bottom: var(--ddd-spacing-2);
+    }
+
+    p {
+      margin-bottom: var(--ddd-spacing-5);
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    form,
+    .success {
+      background: var(--card-bg);
+      padding: var(--ddd-spacing-6);
+      border-radius: var(--ddd-radius-lg);
+      border: 2px solid var(--accent-color);
+      box-shadow: var(--ddd-boxShadow-lg);
+    }
 
     form {
       display: grid;
-      gap: 16px;
-      background: var(--card-bg);
-      padding: 28px;
-      border-radius: 16px;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+      gap: var(--ddd-spacing-4);
     }
 
-    label { font-weight: 700; font-size: 14px; }
+    label {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
     input {
       padding: 12px;
       border-radius: 10px;
-      border: 1px solid rgba(0,0,0,0.2);
+      border: 1px solid rgba(0, 0, 0, 0.25);
       font-size: 15px;
       background: transparent;
       color: var(--text-color);
@@ -46,10 +67,13 @@ export class Project2Join extends DDDSuper(LitElement) {
       border-color: var(--accent-color);
     }
 
-    .error { color: #d32f2f; font-size: 14px; }
+    .error {
+      color: #d32f2f;
+      font-size: 14px;
+    }
 
     button {
-      margin-top: 8px;
+      margin-top: var(--ddd-spacing-2);
       padding: 14px;
       font-size: 16px;
       font-weight: 700;
@@ -61,11 +85,7 @@ export class Project2Join extends DDDSuper(LitElement) {
     }
 
     .success {
-      background: var(--card-bg);
-      padding: 40px;
-      border-radius: 16px;
       text-align: center;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
     }
   `;
 
@@ -73,12 +93,8 @@ export class Project2Join extends DDDSuper(LitElement) {
     e.preventDefault();
     const data = new FormData(e.target);
 
-    const name = data.get("name");
-    const email = data.get("email");
-    const phone = data.get("phone");
     const age = Number(data.get("age"));
-
-    if (!name || !email || !phone || !age) {
+    if (![...data.values()].every(Boolean)) {
       this.error = "Please fill out all fields.";
       return;
     }
@@ -98,8 +114,7 @@ export class Project2Join extends DDDSuper(LitElement) {
           <div class="success">
             <h1>Thank You!</h1>
             <p>
-              Your interest form has been received. A coach will contact you soon
-              with next steps.
+              Your interest form has been received. A coach will contact you soon.
             </p>
           </div>
         </div>
@@ -145,4 +160,3 @@ export class Project2Join extends DDDSuper(LitElement) {
 }
 
 customElements.define(Project2Join.tag, Project2Join);
-
