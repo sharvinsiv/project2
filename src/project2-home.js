@@ -4,6 +4,7 @@
  */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
+import "./project2-game-card.js";
 
 export class Project2Home extends DDDSuper(LitElement) {
   static get tag() {
@@ -11,119 +12,92 @@ export class Project2Home extends DDDSuper(LitElement) {
   }
 
   static get styles() {
-    return [super.styles, css`
-      :host {
-        display: block;
-      }
+    return [
+      super.styles,
+      css`
+        :host {
+          display: block;
+          font-family: var(--ddd-font-navigation);
+        }
 
-      section {
-        margin-bottom: 64px;
-      }
+        h1 {
+          font-size: var(--ddd-font-size-xl);
+          margin-bottom: var(--ddd-spacing-4);
+          color: var(--ddd-theme-default-potentialMidnight);
+        }
 
-      h1 {
-        color: #2e7d32;
-        margin-bottom: 16px;
-      }
+        h2 {
+          font-size: var(--ddd-font-size-l);
+          margin-bottom: var(--ddd-spacing-3);
+          color: var(--ddd-theme-default-potentialMidnight);
+        }
 
-      h2 {
-        margin-bottom: 24px;
-      }
+        p {
+          max-width: 800px;
+          line-height: 1.6;
+          margin-bottom: var(--ddd-spacing-6);
+        }
 
-      .description {
-        max-width: 900px;
-        font-size: 18px;
-        line-height: 1.7;
-      }
+        /* Sponsor cards */
+        .sponsor-card {
+          background: var(--ddd-theme-default-roarLight);
+          padding: var(--ddd-spacing-4);
+          border-radius: var(--ddd-radius-lg);
+          text-align: center;
+          font-family: var(--ddd-font-navigation);
+          box-shadow: var(--ddd-boxShadow-sm);
+        }
 
-      .hero-image {
-        width: 100%;
-        margin: 48px 0;
-      }
-
-      .hero-image img {
-        width: 100%;
-        height: 420px;
-        object-fit: cover;
-        border-radius: 16px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-      }
-
-      .gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 24px;
-      }
-
-      figure {
-        background: #111;
-        border-radius: 14px;
-        overflow: hidden;
-      }
-
-      figure img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-      }
-
-      figcaption {
-        padding: 12px;
-        text-align: center;
-        font-size: 14px;
-        color: #ddd;
-        background: #000;
-      }
-    `];
+        .sponsor-card img {
+          max-width: 120px;
+          height: auto;
+          margin-bottom: var(--ddd-spacing-2);
+        }
+      `,
+    ];
   }
 
   render() {
     return html`
-   
-      <section>
-        <h1>Welcome to Happy Volley FC</h1>
-        <p class="description">
-          Happy Volley FC is a youth soccer club dedicated to building strong
-          athletes and even stronger character. We believe soccer is more than
-          just a game — it is a way to teach teamwork, discipline, leadership,
-          and resilience. Our players learn how to support one another, push
-          themselves to improve, and take pride in representing their team
-          both on and off the field.
-          <br><br>
-          Through structured training sessions, competitive matches, and a
-          positive coaching environment, Happy Volley FC helps young athletes
-          grow their skills, confidence, and love for the sport. Whether it’s
-          game day excitement or hard work at practice, our club is committed
-          to creating a fun, safe, and motivating experience for every player.
-        </p>
-      </section>
+      <h1>Happy Volley FC</h1>
 
-     
-      <section class="hero-image">
-        <img
-          src="https://gopsusports.com/imgproxy/t9mhvu1JWLtLx24u_Ghvxd5lfuckbjylo6sdFBT9O-U/rs:fit:1980:0:0:0/g:ce:0:0/q:90/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2dvcHN1c3BvcnRzLXByb2QvMjAyMy8wOC8wMi9zVDVFalVBZTY0M1dwU1g1cmg0a1dmR3NkbEd0aGczWHA2eUwwNUtuLmpwZw.jpg"
-          alt="Youth soccer team group photo"
-        />
-      </section>
+      <p>
+        Welcome to Happy Volley FC — a youth soccer organization focused on
+        teamwork, player development, and competitive excellence. Follow our
+        journey throughout the season for schedules, rosters, stats, and more.
+      </p>
 
-      <!-- Gallery Section (scroll required) -->
-      <section>
-        <h2>Team Gallery</h2>
-        <div class="gallery">
-          <figure>
-            <img src="https://spacecoastdaily.com/wp-content/uploads/2025/06/EFSC-Mens-Soccer.jpg">
-            <figcaption>Game day energy</figcaption>
-          </figure>
-          <figure>
-            <img src="
-https://gearupwithus.com/wp-content/uploads/2025/09/iStock-2228740185-1024x683.jpg">
-            <figcaption>Practice session</figcaption>
-          </figure>
-          <figure>
-            <img src="https://www.missourisoccer.org/wp-content/uploads/sites/164/2024/06/State-Cup-13.jpg?w=1024">
-            <figcaption>Teamwork on the field</figcaption>
-          </figure>
+      <h2>Upcoming Games</h2>
+      <project2-game-card></project2-game-card>
+
+      <!-- Sponsors Section -->
+      <h2 style="margin-top: var(--ddd-spacing-10);">
+        Our Sponsors
+      </h2>
+
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: var(--ddd-spacing-6);
+          margin-top: var(--ddd-spacing-4);
+        "
+      >
+        <div class="sponsor-card">
+          <img src="" alt="Nike logo" />
+          <p>Nike</p>
         </div>
-      </section>
+
+        <div class="sponsor-card">
+          <img src="" alt="Pepsi logo" />
+          <p>Pepsi</p>
+        </div>
+
+        <div class="sponsor-card">
+          <img src="" alt="Copa90 logo" />
+          <p>Copa 90</p>
+        </div>
+      </div>
     `;
   }
 }
