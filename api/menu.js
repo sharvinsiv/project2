@@ -1,12 +1,10 @@
 export default function handler(req, res) {
-  res.status(200).json({
-    items: [
-      { label: "Home", path: "/" },
-      { label: "Schedule", path: "/schedule" },
-      { label: "Roster", path: "/roster" },
-      { label: "Stats", path: "/stats" },
-      { label: "Standings", path: "/standings" },
-      { label: "Join Us", path: "/join" }
-    ]
-  });
+  res.status(200).json([
+    { title: "Home", path: "/" },
+    { title: "Schedule", path: "/schedule" },
+    { title: "Roster", path: "/roster" },
+    { title: "Stats", path: "/stats" },
+    { title: "Standings", path: "/standings" },
+    { title: "Join Us", path: "/join" }
+  ]);
 }
