@@ -115,7 +115,7 @@ export class Project2Home extends DDDSuper(LitElement) {
 
   render() {
     return html`
-      <!-- INTRO SECTION -->
+
       <section>
         <h1>Welcome to Happy Volley FC</h1>
         <p class="description">
