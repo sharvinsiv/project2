@@ -5,7 +5,8 @@ export default function handler(req, res) {
       { label: "Schedule", path: "/schedule" },
       { label: "Roster", path: "/roster" },
       { label: "Stats", path: "/stats" },
-      { label: "Standings", path: "/standings" }
+      { label: "Standings", path: "/standings" },
+      { label: "Join Us", path: "/join" }
     ]
   });
 }
