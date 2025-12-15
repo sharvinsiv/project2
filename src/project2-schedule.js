@@ -44,7 +44,7 @@ export class Project2Schedule extends DDDSuper(LitElement) {
 
       h1 {
         margin-bottom: 32px;
-        color: #2e7d32;
+        color: var(--hv-accent);
       }
 
       .schedule-grid {
@@ -53,30 +53,45 @@ export class Project2Schedule extends DDDSuper(LitElement) {
         gap: 24px;
       }
 
+      /* LIGHT MODE → DARK CARDS */
+      html[data-theme="light"] .card {
+        background: #1f1f1f;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+      }
+
+      /* DARK MODE → LIGHT CARDS */
+      html[data-theme="dark"] .card {
+        background: #ffffff;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      }
+
       .card {
-        background: var(--ddd-theme-default-roarLight);
         padding: var(--ddd-spacing-4);
         border-radius: var(--ddd-radius-lg);
-        box-shadow: var(--ddd-boxShadow-sm);
-        border-left: 6px solid #2e7d32;
+        border-left: 6px solid var(--hv-accent);
+
+        /* FORCE TEXT TO ALWAYS BE BLACK */
+        color: #000000;
       }
 
       .opponent {
         font-size: 20px;
         font-weight: 700;
         margin-bottom: 8px;
+        color: #000000;
       }
 
       .meta {
         font-size: 14px;
-        opacity: 0.9;
+        opacity: 0.85;
         margin-bottom: 4px;
+        color: #000000;
       }
 
       .location {
         margin-top: 8px;
         font-weight: 600;
-        color: #2e7d32;
+        color: var(--hv-accent);
       }
     `];
   }
@@ -89,7 +104,7 @@ export class Project2Schedule extends DDDSuper(LitElement) {
         ${this.games.map(game => html`
           <div class="card">
             <div class="opponent">vs ${game.opponent}</div>
-            <div class="meta">Date: ${game.date}</div>
+            <div class="meta">Calendar ${game.date}</div>
             <div class="meta">Time ${game.time}</div>
             <div class="location">${game.location}</div>
           </div>
@@ -100,3 +115,4 @@ export class Project2Schedule extends DDDSuper(LitElement) {
 }
 
 customElements.define(Project2Schedule.tag, Project2Schedule);
+
