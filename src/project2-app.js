@@ -2,10 +2,6 @@
  * Copyright 2025 Sharvin Sivarajah
  * @license Apache-2.0
  */
-/**
- * Copyright 2025 Sharvin Sivarajah
- * @license Apache-2.0
- */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
@@ -25,27 +21,36 @@ export class Project2App extends DDDSuper(LitElement) {
   static get properties() {
     return {
       ...super.properties,
-      route: { type: String }
+      route: { type: String },
+      theme: { type: String }
     };
   }
 
   constructor() {
     super();
 
-    // initial route
+    // Routing
     this.route = window.location.pathname || "/";
 
-    // browser navigation
     window.addEventListener("popstate", () => {
       this.route = window.location.pathname || "/";
     });
+
+    // Theme
+    this.theme = "light";
+    document.documentElement.setAttribute("data-theme", "light");
   }
 
   handleNavigation(e) {
-    if (!e.detail || !e.detail.path) return;
+    if (!e.detail?.path) return;
 
     this.route = e.detail.path;
     window.history.pushState({}, "", e.detail.path);
+  }
+
+  toggleTheme() {
+    this.theme = this.theme === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", this.theme);
   }
 
   renderPage() {
@@ -68,9 +73,21 @@ export class Project2App extends DDDSuper(LitElement) {
     return [
       super.styles,
       css`
+        :root {
+          --app-bg: var(--ddd-theme-default-roarLight);
+          --app-text: var(--ddd-theme-default-potentialMidnight);
+        }
+
+        html[data-theme="dark"] {
+          --app-bg: var(--ddd-theme-default-potentialMidnight);
+          --app-text: var(--ddd-theme-default-roarLight);
+        }
+
         :host {
           display: block;
           min-height: 100vh;
+          background: var(--app-bg);
+          color: var(--app-text);
         }
 
         .layout {
@@ -81,7 +98,7 @@ export class Project2App extends DDDSuper(LitElement) {
 
         main {
           flex: 1;
-          padding: 32px 24px;
+          padding: var(--ddd-spacing-6);
           max-width: 1400px;
           margin: 0 auto;
         }
@@ -94,7 +111,9 @@ export class Project2App extends DDDSuper(LitElement) {
       <div class="layout">
         <project2-header
           .currentRoute="${this.route}"
+          .theme="${this.theme}"
           @navigate="${this.handleNavigation}"
+          @toggle-theme="${this.toggleTheme}"
         ></project2-header>
 
         <main>
