@@ -28,7 +28,7 @@ export class Project2App extends DDDSuper(LitElement) {
     super();
     this.route = window.location.pathname || "/";
 
-    // default theme
+   
     this.theme = "dark";
 
     window.addEventListener("popstate", () => {
@@ -39,10 +39,10 @@ export class Project2App extends DDDSuper(LitElement) {
   connectedCallback() {
     super.connectedCallback();
 
-    // ✅ ONE global stylesheet that actually affects the whole site
+    
     this.ensureGlobalThemeStyles();
 
-    // ✅ apply initial theme
+    
     this.applyTheme(this.theme);
   }
 
@@ -100,7 +100,7 @@ export class Project2App extends DDDSuper(LitElement) {
   toggleTheme() {
     this.theme = this.theme === "dark" ? "light" : "dark";
     this.applyTheme(this.theme);
-    this.requestUpdate(); // updates header button label
+    this.requestUpdate(); 
   }
 
   renderPage() {
