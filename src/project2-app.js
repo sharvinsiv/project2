@@ -32,52 +32,32 @@ export class Project2App extends DDDSuper(LitElement) {
   constructor() {
     super();
 
-    // Initial route on page load
-    this.routeouteFromURL();
+    // initial route
+    this.route = window.location.pathname || "/";
 
-    // Handle browser back / forward
+    // browser navigation
     window.addEventListener("popstate", () => {
       this.route = window.location.pathname || "/";
     });
   }
 
-  /**
-   * Normalize route on first load
-   */
-  routeFromURL() {
-    this.route = window.location.pathname || "/";
-  }
-
-  /**
-   * Handle navigation events from header + sidebar
-   */
   handleNavigation(e) {
     if (!e.detail || !e.detail.path) return;
 
-    const path = e.detail.path;
-
-    // Update state + URL
-    this.route = path;
-    window.history.pushState({}, "", path);
+    this.route = e.detail.path;
+    window.history.pushState({}, "", e.detail.path);
   }
 
-  /**
-   * Page routing
-   */
   renderPage() {
     switch (this.route) {
       case "/schedule":
         return html`<project2-schedule></project2-schedule>`;
-
       case "/roster":
         return html`<project2-roster></project2-roster>`;
-
       case "/stats":
         return html`<project2-stats></project2-stats>`;
-
       case "/standings":
         return html`<project2-standings></project2-standings>`;
-
       case "/":
       default:
         return html`<project2-home></project2-home>`;
@@ -91,7 +71,6 @@ export class Project2App extends DDDSuper(LitElement) {
         :host {
           display: block;
           min-height: 100vh;
-          background: #ffffff;
         }
 
         .layout {
