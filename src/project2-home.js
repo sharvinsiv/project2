@@ -53,6 +53,14 @@ export class Project2Home extends DDDSuper(LitElement) {
           height: auto;
           margin-bottom: var(--ddd-spacing-2);
         }
+
+        /* Sponsors Section */
+        .sponsor-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: var(--ddd-spacing-6);
+          margin-top: var(--ddd-spacing-4);
+        }
       `,
     ];
   }
@@ -75,14 +83,7 @@ export class Project2Home extends DDDSuper(LitElement) {
         Our Sponsors
       </h2>
 
-      <div
-        style="
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: var(--ddd-spacing-6);
-          margin-top: var(--ddd-spacing-4);
-        "
-      >
+      <div class="sponsor-container">
         <div class="sponsor-card">
           <img src="" alt="Nike logo" />
           <p>Nike</p>
@@ -103,3 +104,4 @@ export class Project2Home extends DDDSuper(LitElement) {
 }
 
 customElements.define(Project2Home.tag, Project2Home);
+
