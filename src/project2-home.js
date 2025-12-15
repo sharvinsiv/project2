@@ -166,8 +166,8 @@ export class Project2Home extends DDDSuper(LitElement) {
           </div>
           <div class="sponsor-card">
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/6/6f/COPA90_logo.svg"
-              alt="Copa90 logo"
+              src="https://logovectordl.com/wp-content/uploads/2020/08/unibet-logo-vector.png"
+              alt="Unibet logo"
             />
           </div>
           <div class="sponsor-card">
