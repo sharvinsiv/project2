@@ -39,21 +39,23 @@ export class Project2App extends DDDSuper(LitElement) {
   static styles = css`
     :host {
       /* LIGHT MODE */
-      --bg-color: #ffffff;
-      --text-color: #111111;
-      --accent-color: #2e7d32;
-      --card-bg: #f5f5f5;
+      --bg-color: #f9fafb;
+      --text-color: #111827;
+      --accent-color: #2563eb;
+      --card-bg: #ffffff;
     }
 
     :host([theme="dark"]) {
       /* DARK MODE */
-      --bg-color: #1b1b1b;
-      --text-color: #ffffff;
-      --accent-color: #81c784;
-      --card-bg: #111111;
+      --bg-color: #0f172a;
+      --text-color: #f8fafc;
+      --accent-color: #60a5fa;
+      --card-bg: #020617;
     }
 
     :host {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
@@ -64,7 +66,7 @@ export class Project2App extends DDDSuper(LitElement) {
 
     main {
       flex: 1;
-      padding: 32px;
+      padding: 56px 32px;
       max-width: 1100px;
       margin: 0 auto;
       width: 100%;
@@ -104,21 +106,25 @@ export class Project2App extends DDDSuper(LitElement) {
 
   render() {
     return html`
+      <!-- Sidebar -->
       <project2-sidebar
         ?open=${this.menuOpen}
         @navigate=${this.navigate}>
       </project2-sidebar>
 
+      <!-- Header -->
       <project2-header
         @navigate=${this.navigate}
         @toggle-theme=${this.toggleTheme}
         @toggle-menu=${this.toggleMenu}>
       </project2-header>
 
+      <!-- Page Content -->
       <main>
         ${this.renderPage()}
       </main>
 
+      <!-- Footer -->
       <project2-footer></project2-footer>
     `;
   }
