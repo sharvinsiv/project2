@@ -25,7 +25,7 @@ align-items: center;
 nav button {
 background: none;
 border: none;
-color: white;
+color: #1b1b1b;
 margin-left: 16px;
 font-size: 16px;
 cursor: pointer;
