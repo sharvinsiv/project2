@@ -4,7 +4,6 @@
  */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-import "./project2-game-card.js";
 
 export class Project2Schedule extends DDDSuper(LitElement) {
   static get tag() {
@@ -31,39 +30,69 @@ export class Project2Schedule extends DDDSuper(LitElement) {
   async loadSchedule() {
     try {
       const res = await fetch("/api/schedule");
-      const data = await res.json();
-      this.games = data.games || [];
+      this.games = await res.json();
     } catch (e) {
-      console.error("Schedule API failed", e);
-      this.games = [];
+      console.error("Failed to load schedule", e);
     }
   }
 
   static get styles() {
     return [super.styles, css`
-      h1 {
-        margin-bottom: var(--ddd-spacing-4);
+      :host {
+        display: block;
       }
 
-      .grid {
+      h1 {
+        margin-bottom: 32px;
+        color: #2e7d32;
+      }
+
+      .schedule-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: var(--ddd-spacing-4);
+        gap: 24px;
+      }
+
+      .card {
+        background: var(--ddd-theme-default-roarLight);
+        padding: var(--ddd-spacing-4);
+        border-radius: var(--ddd-radius-lg);
+        box-shadow: var(--ddd-boxShadow-sm);
+        border-left: 6px solid #2e7d32;
+      }
+
+      .opponent {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .meta {
+        font-size: 14px;
+        opacity: 0.9;
+        margin-bottom: 4px;
+      }
+
+      .location {
+        margin-top: 8px;
+        font-weight: 600;
+        color: #2e7d32;
       }
     `];
   }
 
   render() {
     return html`
-      <h1>Upcoming Matches</h1>
-      <div class="grid">
+      <h1>Season Schedule</h1>
+
+      <div class="schedule-grid">
         ${this.games.map(game => html`
-          <project2-game-card
-            .date="${game.date}"
-            .opponent="${game.opponent}"
-            .location="${game.location}"
-            .time="${game.time}"
-          ></project2-game-card>
+          <div class="card">
+            <div class="opponent">vs ${game.opponent}</div>
+            <div class="meta">📅 ${game.date}</div>
+            <div class="meta">⏰ ${game.time}</div>
+            <div class="location">${game.location}</div>
+          </div>
         `)}
       </div>
     `;
