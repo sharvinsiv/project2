@@ -122,14 +122,12 @@ export class Project2Home extends DDDSuper(LitElement) {
       <section>
         <h1>Happy Volley FC</h1>
         <p>
-          Happy Volley FC is a competitive youth soccer club built on teamwork,
-          discipline, and passion for the game. Our mission is to help young
-          athletes grow both on and off the field while representing our club
-          with pride, effort, and respect.
+          Happy Volley FC is a competitive youth soccer club dedicated to developing well rounded athletes through a strong commitment to teamwork, discipline, and a genuine love for the game. We provide a structured and supportive environment where players are challenged to grow technically, tactically, and mentally while learning the value of hard work and accountability. Our club believes that success on the field begins with strong character off the field. Through consistent training, thoughtful coaching, and a focus on personal development, we help young athletes build confidence, resilience, and leadership skills that extend beyond soccer. Players are encouraged to compete with intensity, respect the game, and support their teammates in every situation. 
+At Happy Volley FC, representing the club is a responsibility we take seriously. Our athletes are taught to play with pride, give maximum effort, and uphold high standards of sportsmanship at all times. By fostering a culture of growth, respect, and passion, we aim to prepare our players not only for the next level of soccer but also for long term success in life.
+
         </p>
       </section>
 
-      <!-- HERO IMAGE -->
       <section class="hero">
         <img
           src="https://gopsusports.com/imgproxy/t9mhvu1JWLtLx24u_Ghvxd5lfuckbjylo6sdFBT9O-U/rs:fit:1980:0:0:0/g:ce:0:0/q:90/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2dvcHN1c3BvcnRzLXByb2QvMjAyMy8wOC8wMi9zVDVFalVBZTY0M1dwU1g1cmg0a1dmR3NkbEd0aGczWHA2eUwwNUtuLmpwZw.jpg"
@@ -137,7 +135,6 @@ export class Project2Home extends DDDSuper(LitElement) {
         />
       </section>
 
-      <!-- CHAMPIONSHIP COUNTER -->
       <section>
         <div class="counter">
           <h3>7</h3>
@@ -145,7 +142,6 @@ export class Project2Home extends DDDSuper(LitElement) {
         </div>
       </section>
 
-      <!-- CONTACT -->
       <section>
         <h2>Contact the Team</h2>
         <div class="contact">
