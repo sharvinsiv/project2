@@ -6,42 +6,40 @@ import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
 export class Project2Footer extends DDDSuper(LitElement) {
-
-  static get tag() { return "project2-footer"; }
-
-  constructor() { 
-    super(); 
-    this.year = new Date().getFullYear(); 
-  }
-
-  static get properties() { 
-    return { ...super.properties, year: { type: Number } }; 
-  }
-
-  static get styles() {
-    return [super.styles, css`
-      :host { display: block; background-color: #1b5e20; color: #ffffff; margin-top: 48px; font-family: 'Poppins', sans-serif; }
-      .footer-wrapper { max-width: 1400px; margin: 0 auto; padding: 24px; text-align: center; border-top: 3px solid #81c784; border-radius: 12px 12px 0 0; }
-      .social-links { display: flex; gap: 16px; justify-content: center; margin-top: 12px; }
-      .social-link { color: #81c784; text-decoration: none; font-weight: 500; transition: all 0.3s; }
-      .social-link:hover { color: #000000; transform: scale(1.1); }
-      .copyright { font-size: 14px; opacity: 0.9; }
-    `];
-  }
-
-  render() {
-    return html`
-      <div class="footer-wrapper">
-        <div class="copyright">© ${this.year} Sharvin Sivarajah. All rights reserved.</div>
-        <div class="social-links">
-          <a href="#" class="social-link">Facebook</a>
-          <a href="#" class="social-link">Twitter</a>
-          <a href="#" class="social-link">Instagram</a>
-        </div>
-      </div>
-    `;
-  }
+static get tag() {
+return "project2-footer";
 }
 
-customElements.define(Project2Footer.tag, Project2Footer);
+static get styles() {
+return [super.styles, css`
+footer {
+background: #111;
+color: white;
+text-align: center;
+padding: 16px;
+margin-top: 40px;
+}
 
+.socials a {
+color: #7ed957;
+margin: 0 8px;
+text-decoration: none;
+}
+`];
+}
+
+render() {
+return html`
+<footer>
+<div class="socials">
+<a href="#">Facebook</a>
+<a href="#">Instagram</a>
+<a href="#">Twitter</a>
+</div>
+<p>© ${new Date().getFullYear()} Happy Volley FC</p>
+</footer>
+`;
+}
+}
+
+globalThis.customElements.define(Project2Footer.tag, Project2Footer);
