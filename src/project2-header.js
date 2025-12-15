@@ -3,10 +3,6 @@
  * Copyright 2025 sharvinsiv
  * @license Apache-2.0, see LICENSE for full text.
  */
-/**
- * Copyright 2025 sharvinsiv
- * @license Apache-2.0, see LICENSE for full text.
- */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
@@ -36,6 +32,11 @@ export class Project2Header extends DDDSuper(LitElement) {
   connectedCallback() {
     super.connectedCallback();
     this.loadMenu();
+
+    // keep active tab in sync when user uses browser back/forward
+    window.addEventListener("popstate", () => {
+      this.currentRoute = window.location.pathname || "/";
+    });
   }
 
   async loadMenu() {
@@ -51,8 +52,11 @@ export class Project2Header extends DDDSuper(LitElement) {
     this.menuOpen = !this.menuOpen;
   }
 
+  /** ✅ FIXED: updates local route state */
   navigate(path) {
     this.menuOpen = false;
+    this.currentRoute = path;
+
     this.dispatchEvent(
       new CustomEvent("navigate", {
         detail: { path },
@@ -141,14 +145,6 @@ export class Project2Header extends DDDSuper(LitElement) {
 
         nav button.active {
           border-bottom: 2px solid #81c784;
-        }
-
-        .join {
-          background: #81c784;
-          color: #000;
-          padding: 6px 14px;
-          border-radius: 20px;
-          font-weight: 700;
         }
 
         .sidebar {
