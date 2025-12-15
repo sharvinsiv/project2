@@ -7,6 +7,10 @@
  * Copyright 2025 sharvinsiv
  * @license Apache-2.0
  */
+/**
+ * Copyright 2025 sharvinsiv
+ * @license Apache-2.0
+ */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
@@ -15,18 +19,20 @@ export class Project2Header extends DDDSuper(LitElement) {
     return "project2-header";
   }
 
-  constructor() {
-    super();
-    this.currentRoute = "/";
-    this.navItems = [];
-  }
-
   static get properties() {
     return {
       ...super.properties,
       currentRoute: { type: String },
-      navItems: { type: Array }
+      navItems: { type: Array },
+      sidebarOpen: { type: Boolean }
     };
+  }
+
+  constructor() {
+    super();
+    this.currentRoute = "/";
+    this.navItems = [];
+    this.sidebarOpen = false;
   }
 
   connectedCallback() {
@@ -54,11 +60,17 @@ export class Project2Header extends DDDSuper(LitElement) {
 
       .header-wrapper {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
         padding: 16px;
         max-width: 1200px;
         margin: 0 auto;
+      }
+
+      .left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
       }
 
       .logo {
@@ -81,32 +93,60 @@ export class Project2Header extends DDDSuper(LitElement) {
         border-radius: 6px;
         font-size: 16px;
         cursor: pointer;
-        transition: background 0.3s;
+        transition: background 0.2s;
       }
 
       button:hover,
       button.active {
         background-color: #81c784;
-        color: #000000;
+        color: #000;
+      }
+
+      .menu-btn {
+        font-size: 22px;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        background: #145a23;
+        padding: 16px;
+        display: none;
+      }
+
+      .sidebar.open {
+        display: block;
+      }
+
+      .sidebar button {
+        display: block;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 8px;
       }
     `];
   }
 
   navigate(path) {
-    this.dispatchEvent(
-      new CustomEvent("navigate", {
-        detail: { path },
-        bubbles: true,
-        composed: true
-      })
-    );
+    this.dispatchEvent(new CustomEvent("navigate", {
+      detail: { path },
+      bubbles: true,
+      composed: true
+    }));
+    this.sidebarOpen = false;
+  }
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
   }
 
   render() {
     return html`
       <div class="header-wrapper">
-        <div class="logo" @click=${() => this.navigate("/")}>
-          Happy Volley FC
+        <div class="left">
+          <button class="menu-btn" @click=${this.toggleSidebar}>☰</button>
+          <div class="logo" @click=${() => this.navigate("/")}>
+            Happy Volley FC
+          </div>
         </div>
 
         <nav>
@@ -120,8 +160,20 @@ export class Project2Header extends DDDSuper(LitElement) {
           `)}
         </nav>
       </div>
+
+      <div class="sidebar ${this.sidebarOpen ? "open" : ""}">
+        ${this.navItems.map(item => html`
+          <button
+            class="${this.currentRoute === item.path ? "active" : ""}"
+            @click=${() => this.navigate(item.path)}
+          >
+            ${item.label}
+          </button>
+        `)}
+      </div>
     `;
   }
 }
 
 customElements.define(Project2Header.tag, Project2Header);
+
