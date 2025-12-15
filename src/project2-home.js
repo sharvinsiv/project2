@@ -170,18 +170,18 @@ export class Project2Home extends DDDSuper(LitElement) {
         <h2>Our Sponsors</h2>
         <div class="sponsors">
           <div class="sponsor-card">
-            <img src="" alt="Nike logo">
+            <img src="https://cdn.freebiesupply.com/logos/large/2x/nike-4-logo-svg-vector.svg" alt="Nike logo">
             <p>Nike</p>
           </div>
 
           <div class="sponsor-card">
-            <img src="" alt="Pepsi logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pepsi_2023.svg/2048px-Pepsi_2023.svg.png" alt="Pepsi logo">
             <p>Pepsi</p>
           </div>
 
           <div class="sponsor-card">
-            <img src="" alt="Copa 90 logo">
-            <p>Copa 90</p>
+            <img src="https://logovectordl.com/wp-content/uploads/2020/08/unibet-logo-vector.png" alt="Unibet logo">
+            <p>Unibet</p>
           </div>
         </div>
       </section>
