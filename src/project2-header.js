@@ -223,7 +223,7 @@ export class Project2Header extends DDDSuper(LitElement) {
           </button>
 
           <button @click=${this.toggleTheme}>
-            🌙 / ☀️
+            ☀️ / 🌙
           </button>
         </nav>
       </header>
