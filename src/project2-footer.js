@@ -6,40 +6,35 @@ import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
 export class Project2Footer extends DDDSuper(LitElement) {
-static get tag() {
-return "project2-footer";
-}
+static get tag() { return "project2-footer"; }
 
-static get styles() {
-return [super.styles, css`
+static styles = css`
 footer {
-background: #111;
-color: white;
+background: #1f5f2a;
+padding: 24px;
 text-align: center;
-padding: 16px;
-margin-top: 40px;
+color: white;
 }
 
-.socials a {
-color: #7ed957;
-margin: 0 8px;
+a {
+color: #a5d6a7;
+margin: 0 10px;
 text-decoration: none;
 }
-`];
-}
+`;
 
 render() {
 return html`
 <footer>
-<div class="socials">
+<div>
 <a href="#">Facebook</a>
-<a href="#">Instagram</a>
 <a href="#">Twitter</a>
+<a href="#">Instagram</a>
 </div>
-<p>© ${new Date().getFullYear()} Happy Volley FC</p>
+<p>© 2025 Sharvin Sivarajah. All rights reserved.</p>
 </footer>
 `;
 }
 }
 
-globalThis.customElements.define(Project2Footer.tag, Project2Footer);
+customElements.define(Project2Footer.tag, Project2Footer);
