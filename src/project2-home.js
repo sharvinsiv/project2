@@ -2,6 +2,10 @@
  * Copyright 2025 sharvinsiv
  * @license Apache-2.0, see LICENSE for full text.
  */
+/**
+ * Copyright 2025 sharvinsiv
+ * @license Apache-2.0, see LICENSE for full text.
+ */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
@@ -10,143 +14,154 @@ export class Project2Home extends DDDSuper(LitElement) {
     return "project2-home";
   }
 
-  static styles = css`
-    :host {
-      display: block;
-    }
+  static get styles() {
+    return [
+      super.styles,
+      css`
+        :host {
+          display: block;
+        }
 
-    section {
-      margin-bottom: 96px;
-    }
+        section {
+          margin-bottom: 64px;
+        }
 
-    h1 {
-      font-size: 42px;
-      margin-bottom: 24px;
-      color: var(--accent-color);
-    }
+        h1 {
+          color: #2e7d32;
+          margin-bottom: 16px;
+        }
 
-    h2 {
-      font-size: 32px;
-      margin-bottom: 24px;
-    }
+        h2 {
+          margin-bottom: 24px;
+        }
 
-    p {
-      font-size: 18px;
-      line-height: 1.7;
-      max-width: 900px;
-    }
+        .description {
+          max-width: 900px;
+          font-size: 18px;
+          line-height: 1.7;
+        }
 
-    /* HERO IMAGE */
-    .hero {
-      margin-top: 32px;
-    }
+        /* HERO IMAGE */
+        .hero-image {
+          width: 100%;
+          margin: 48px 0;
+        }
 
-    .hero img {
-      width: 100%;
-      height: 460px;
-      object-fit: cover;
-      border-radius: 20px;
-      transition: transform 0.4s ease;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.25);
-    }
+        .hero-image img {
+          width: 100%;
+          height: 420px;
+          object-fit: cover;
+          border-radius: 16px;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+          transition: transform 0.3s ease;
+        }
 
-    .hero img:hover {
-      transform: scale(1.04);
-    }
+        .hero-image img:hover {
+          transform: scale(1.03);
+        }
 
-    /* COUNTER BANNER */
-    .counter {
-      background: var(--accent-color);
-      color: white;
-      padding: 48px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    }
+        /* GALLERY */
+        .gallery {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+          gap: 24px;
+        }
 
-    .counter h3 {
-      font-size: 48px;
-      margin-bottom: 8px;
-    }
+        figure {
+          background: #111;
+          border-radius: 14px;
+          overflow: hidden;
+        }
 
-    .counter span {
-      font-size: 18px;
-      opacity: 0.9;
-    }
+        figure img {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          transition: transform 0.3s ease;
+        }
 
-    /* CONTACT SECTION */
-    .contact {
-      background: var(--card-bg);
-      padding: 48px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    }
+        figure img:hover {
+          transform: scale(1.05);
+        }
 
-    .contact p {
-      margin-bottom: 12px;
-      font-size: 18px;
-    }
+        figcaption {
+          padding: 12px;
+          text-align: center;
+          font-size: 14px;
+          color: #ddd;
+          background: #000;
+        }
 
-    /* SPONSORS */
-    .sponsors {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 32px;
-    }
+        /* SPONSORS */
+        .sponsors {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 32px;
+          margin-top: 32px;
+        }
 
-    .sponsor-card {
-      background: var(--card-bg);
-      padding: 32px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      transition: transform 0.3s ease;
-    }
+        .sponsor-card {
+          background: #f5f5f5;
+          padding: 24px;
+          border-radius: 14px;
+          text-align: center;
+          box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
 
-    .sponsor-card:hover {
-      transform: translateY(-6px);
-    }
-
-    .sponsor-card img {
-      max-width: 160px;
-      max-height: 80px;
-      object-fit: contain;
-    }
-  `;
+        .sponsor-card img {
+          max-width: 120px;
+          height: auto;
+          margin-bottom: 12px;
+        }
+      `,
+    ];
+  }
 
   render() {
     return html`
-      <!-- INTRO -->
+      <!-- INTRO SECTION -->
       <section>
-        <h1>Happy Volley FC</h1>
-        <p>
-          Happy Volley FC is a competitive youth soccer club dedicated to developing well rounded athletes through a strong commitment to teamwork, discipline, and a genuine love for the game. We provide a structured and supportive environment where players are challenged to grow technically, tactically, and mentally while learning the value of hard work and accountability. Our club believes that success on the field begins with strong character off the field. Through consistent training, thoughtful coaching, and a focus on personal development, we help young athletes build confidence, resilience, and leadership skills that extend beyond soccer. Players are encouraged to compete with intensity, respect the game, and support their teammates in every situation. 
-At Happy Volley FC, representing the club is a responsibility we take seriously. Our athletes are taught to play with pride, give maximum effort, and uphold high standards of sportsmanship at all times. By fostering a culture of growth, respect, and passion, we aim to prepare our players not only for the next level of soccer but also for long term success in life.
-
+        <h1>Welcome to Happy Volley FC</h1>
+        <p class="description">
+          Happy Volley FC is a youth soccer club dedicated to building strong
+          athletes and even stronger character. We believe soccer is more than
+          just a game — it is a way to teach teamwork, discipline, leadership,
+          and resilience.
+          <br /><br />
+          Through structured training sessions, competitive matches, and a
+          positive coaching environment, Happy Volley FC helps young athletes
+          grow their skills, confidence, and love for the sport. Whether it’s
+          game day excitement or hard work at practice, our club is committed
+          to creating a fun, safe, and motivating experience for every player.
         </p>
       </section>
 
-      <section class="hero">
+      <!-- HERO IMAGE -->
+      <section class="hero-image">
         <img
           src="https://gopsusports.com/imgproxy/t9mhvu1JWLtLx24u_Ghvxd5lfuckbjylo6sdFBT9O-U/rs:fit:1980:0:0:0/g:ce:0:0/q:90/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL2dvcHN1c3BvcnRzLXByb2QvMjAyMy8wOC8wMi9zVDVFalVBZTY0M1dwU1g1cmg0a1dmR3NkbEd0aGczWHA2eUwwNUtuLmpwZw.jpg"
-          alt="Happy Volley FC team photo"
+          alt="Youth soccer team group photo"
         />
       </section>
 
+      <!-- GALLERY -->
       <section>
-        <div class="counter">
-          <h3>7</h3>
-          <span>League Championships Won</span>
-        </div>
-      </section>
+        <h2>Team Gallery</h2>
+        <div class="gallery">
+          <figure>
+            <img src="https://spacecoastdaily.com/wp-content/uploads/2025/06/EFSC-Mens-Soccer.jpg">
+            <figcaption>Game day energy</figcaption>
+          </figure>
 
-      <section>
-        <h2>Contact the Team</h2>
-        <div class="contact">
-          <p><strong>Email:</strong> contact@happyvolleyfc.org</p>
-          <p><strong>Phone:</strong> (555) 867-5309</p>
+          <figure>
+            <img src="https://gearupwithus.com/wp-content/uploads/2025/09/iStock-2228740185-1024x683.jpg">
+            <figcaption>Practice session</figcaption>
+          </figure>
+
+          <figure>
+            <img src="https://www.missourisoccer.org/wp-content/uploads/sites/164/2024/06/State-Cup-13.jpg?w=1024">
+            <figcaption>Teamwork on the field</figcaption>
+          </figure>
         </div>
       </section>
 
@@ -155,22 +170,18 @@ At Happy Volley FC, representing the club is a responsibility we take seriously.
         <h2>Our Sponsors</h2>
         <div class="sponsors">
           <div class="sponsor-card">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg"
-              alt="Nike logo"
-            />
+            <img src="" alt="Nike logo">
+            <p>Nike</p>
           </div>
+
           <div class="sponsor-card">
-            <img
-              src="https://logovectordl.com/wp-content/uploads/2020/08/unibet-logo-vector.png"
-              alt="Unibet logo"
-            />
+            <img src="" alt="Pepsi logo">
+            <p>Pepsi</p>
           </div>
+
           <div class="sponsor-card">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Pepsi_logo_2014.svg"
-              alt="Pepsi logo"
-            />
+            <img src="" alt="Copa 90 logo">
+            <p>Copa 90</p>
           </div>
         </div>
       </section>
@@ -179,4 +190,3 @@ At Happy Volley FC, representing the club is a responsibility we take seriously.
 }
 
 customElements.define(Project2Home.tag, Project2Home);
-
