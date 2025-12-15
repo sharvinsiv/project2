@@ -21,7 +21,7 @@ static styles = css`
 display: flex;
 flex-direction: column;
 min-height: 100vh;
-background: #1b1b1b;
+background: #FFFFFF;
 color: white;
 }
 
