@@ -1,3 +1,7 @@
+/**
+ * Copyright 2025 sharvinsiv
+ * @license Apache-2.0, see LICENSE for full text.
+ */
 import { LitElement, html, css } from "lit";
 
 export class Project2Sidebar extends LitElement {
