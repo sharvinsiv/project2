@@ -13,6 +13,7 @@ import "./project2-schedule.js";
 import "./project2-roster.js";
 import "./project2-stats.js";
 import "./project2-standings.js";
+import "./project2-join.js";
 
 export class Project2App extends DDDSuper(LitElement) {
   static get tag() {
@@ -94,6 +95,8 @@ export class Project2App extends DDDSuper(LitElement) {
         return html`<project2-stats></project2-stats>`;
       case "standings":
         return html`<project2-standings></project2-standings>`;
+      case "join":
+        return html`<project2-join></project2-join>`;
       default:
         return html`<project2-home></project2-home>`;
     }
@@ -101,29 +104,24 @@ export class Project2App extends DDDSuper(LitElement) {
 
   render() {
     return html`
-      <!-- Sidebar -->
       <project2-sidebar
         ?open=${this.menuOpen}
         @navigate=${this.navigate}>
       </project2-sidebar>
 
-      <!-- Header -->
       <project2-header
         @navigate=${this.navigate}
         @toggle-theme=${this.toggleTheme}
         @toggle-menu=${this.toggleMenu}>
       </project2-header>
 
-      <!-- Page Content -->
       <main>
         ${this.renderPage()}
       </main>
 
-      <!-- Footer -->
       <project2-footer></project2-footer>
     `;
   }
 }
 
 customElements.define(Project2App.tag, Project2App);
-
