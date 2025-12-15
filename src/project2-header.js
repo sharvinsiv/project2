@@ -11,44 +11,28 @@ export class Project2Header extends DDDSuper(LitElement) {
     return "project2-header";
   }
 
-  static properties = {
-    currentRoute: { type: String },
-    navItems: { type: Array },
-    sidebarOpen: { type: Boolean },
-    theme: { type: String }
-  };
+  static get properties() {
+    return {
+      ...super.properties,
+      currentRoute: { type: String },
+      menuOpen: { type: Boolean },
+      theme: { type: String }
+    };
+  }
 
   constructor() {
     super();
-    this.currentRoute = window.location.pathname || "/";
-    this.navItems = [];
-    this.sidebarOpen = false;
-    this.theme = "dark";
+    this.currentRoute = "/";
+    this.menuOpen = false;
+    this.theme = "light";
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.loadMenu();
+  toggleSidebar() {
+    this.menuOpen = !this.menuOpen;
   }
 
-  async loadMenu() {
-    try {
-      const res = await fetch("/api/menu");
-      const data = await res.json();
-      this.navItems = data.items || [];
-    } catch (e) {
-      this.navItems = [
-        { label: "Home", path: "/" },
-        { label: "Schedule", path: "/schedule" },
-        { label: "Roster", path: "/roster" },
-        { label: "Stats", path: "/stats" },
-        { label: "Standings", path: "/standings" },
-        { label: "Join Us", path: "/join" }
-      ];
-    }
-  }
-
-  emitNavigate(path) {
+  navigate(path) {
+    this.menuOpen = false;
     this.dispatchEvent(
       new CustomEvent("navigate", {
         detail: { path },
@@ -56,14 +40,9 @@ export class Project2Header extends DDDSuper(LitElement) {
         composed: true
       })
     );
-    this.sidebarOpen = false;
   }
 
-  toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
-  }
-
-  emitToggleTheme() {
+  toggleTheme() {
     this.dispatchEvent(
       new CustomEvent("toggle-theme", {
         bubbles: true,
@@ -72,99 +51,133 @@ export class Project2Header extends DDDSuper(LitElement) {
     );
   }
 
-  static styles = css`
-    :host {
-      display: block;
-      background: #1b5e20;
-      color: white;
-    }
+  static get styles() {
+    return [super.styles, css`
+      :host {
+        display: block;
+        background: #1b5e20;
+        color: white;
+      }
 
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+      }
 
-    nav {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 18px;
+      }
 
-    button {
-      background: none;
-      border: none;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
-      font-family: var(--ddd-font-navigation);
-    }
+      .menu-btn {
+        font-size: 22px;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+      }
 
-    button:hover {
-      background: rgba(255,255,255,0.15);
-    }
+      nav {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
 
-    .sidebar {
-      display: none;
-      background: #145a23;
-      padding: 16px;
-    }
+      nav button {
+        background: none;
+        border: none;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+      }
 
-    .sidebar.open {
-      display: block;
-    }
+      nav button.active {
+        border-bottom: 2px solid #81c784;
+      }
 
-    .sidebar button {
-      display: block;
-      width: 100%;
-      text-align: left;
-      margin-bottom: 8px;
-    }
+      .join {
+        background: #81c784;
+        color: #000;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: 700;
+      }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-  `;
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 260px;
+        height: 100vh;
+        background: #1b5e20;
+        padding: 24px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 999;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar button {
+        display: block;
+        width: 100%;
+        margin-bottom: 16px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 16px;
+        text-align: left;
+        cursor: pointer;
+      }
+    `];
+  }
 
   render() {
     return html`
-      <div class="header">
-        <div class="brand" @click=${() => this.emitNavigate("/")}>
-          <button @click=${this.toggleSidebar} aria-label="Open menu">☰</button>
-          <span>Happy Volley FC</span>
+      <header>
+        <div
+          class="brand"
+          @click=${() => this.navigate("/")}
+        >
+          <button
+            class="menu-btn"
+            @click=${(e) => {
+              e.stopPropagation();
+              this.toggleSidebar();
+            }}
+            aria-label="Open menu"
+          >
+            ☰
+          </button>
+          Happy Volley FC
         </div>
 
         <nav>
-          ${this.navItems.map(
-            (item) => html`
-              <button @click=${() => this.emitNavigate(item.path)}>
-                ${item.label}
-              </button>
-            `
-          )}
-          <button @click=${this.emitToggleTheme}>
-            ${this.theme === "dark" ? "☀️ Light" : "🌙 Dark"}
-          </button>
+          <button class=${this.currentRoute === "/" ? "active" : ""} @click=${() => this.navigate("/")}>Home</button>
+          <button class=${this.currentRoute === "/schedule" ? "active" : ""} @click=${() => this.navigate("/schedule")}>Schedule</button>
+          <button class=${this.currentRoute === "/roster" ? "active" : ""} @click=${() => this.navigate("/roster")}>Roster</button>
+          <button class=${this.currentRoute === "/stats" ? "active" : ""} @click=${() => this.navigate("/stats")}>Stats</button>
+          <button class=${this.currentRoute === "/standings" ? "active" : ""} @click=${() => this.navigate("/standings")}>Standings</button>
+          <button class="join" @click=${() => this.navigate("/join")}>Join Us</button>
+          <button @click=${this.toggleTheme}>🌙 / ☀️</button>
         </nav>
-      </div>
+      </header>
 
-      <div class="sidebar ${this.sidebarOpen ? "open" : ""}">
-        ${this.navItems.map(
-          (item) => html`
-            <button @click=${() => this.emitNavigate(item.path)}>
-              ${item.label}
-            </button>
-          `
-        )}
+      <div class="sidebar ${this.menuOpen ? "open" : ""}">
+        <button @click=${() => this.navigate("/")}>Home</button>
+        <button @click=${() => this.navigate("/schedule")}>Schedule</button>
+        <button @click=${() => this.navigate("/roster")}>Roster</button>
+        <button @click=${() => this.navigate("/stats")}>Stats</button>
+        <button @click=${() => this.navigate("/standings")}>Standings</button>
+        <button @click=${() => this.navigate("/join")}>Join Us</button>
       </div>
     `;
   }
