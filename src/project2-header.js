@@ -6,6 +6,10 @@
 import { LitElement, html, css } from "lit";
 
 export class Project2Header extends LitElement {
+  static get tag() {
+    return "project2-header";
+  }
+
   static styles = css`
     header {
       background: var(--accent-color);
@@ -50,6 +54,10 @@ export class Project2Header extends LitElement {
       font-size: 15px;
     }
 
+    button:hover {
+      text-decoration: underline;
+    }
+
     .theme-toggle {
       border: 1px solid white;
       border-radius: 20px;
@@ -91,10 +99,12 @@ export class Project2Header extends LitElement {
         </div>
 
         <nav>
+          <button @click=${() => this.nav("home")}>Home</button>
           <button @click=${() => this.nav("schedule")}>Schedule</button>
           <button @click=${() => this.nav("roster")}>Roster</button>
           <button @click=${() => this.nav("stats")}>Stats</button>
           <button @click=${() => this.nav("standings")}>Standings</button>
+          <button @click=${() => this.nav("join")}>Join Us</button>
           <button class="theme-toggle" @click=${this.toggleTheme}>🌙 / ☀️</button>
         </nav>
       </header>
@@ -102,5 +112,4 @@ export class Project2Header extends LitElement {
   }
 }
 
-customElements.define("project2-header", Project2Header);
-
+customElements.define(Project2Header.tag, Project2Header);
