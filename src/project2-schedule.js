@@ -53,25 +53,14 @@ export class Project2Schedule extends DDDSuper(LitElement) {
         gap: 24px;
       }
 
-      /* LIGHT MODE → DARK CARDS */
-      html[data-theme="light"] .card {
-        background: #1f1f1f;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-      }
-
-      /* DARK MODE → LIGHT CARDS */
-      html[data-theme="dark"] .card {
-        background: #ffffff;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-      }
-
       .card {
+        background: #ffffff;            
         padding: var(--ddd-spacing-4);
         border-radius: var(--ddd-radius-lg);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.2);
         border-left: 6px solid var(--hv-accent);
 
-        /* FORCE TEXT TO ALWAYS BE BLACK */
-        color: #000000;
+        color: #000000;                  
       }
 
       .opponent {
@@ -104,7 +93,7 @@ export class Project2Schedule extends DDDSuper(LitElement) {
         ${this.games.map(game => html`
           <div class="card">
             <div class="opponent">vs ${game.opponent}</div>
-            <div class="meta">Calendar ${game.date}</div>
+            <div class="meta">Date ${game.date}</div>
             <div class="meta">Time ${game.time}</div>
             <div class="location">${game.location}</div>
           </div>
@@ -115,4 +104,3 @@ export class Project2Schedule extends DDDSuper(LitElement) {
 }
 
 customElements.define(Project2Schedule.tag, Project2Schedule);
-
