@@ -3,6 +3,10 @@
  * Copyright 2025 sharvinsiv
  * @license Apache-2.0, see LICENSE for full text.
  */
+/**
+ * Copyright 2025 sharvinsiv
+ * @license Apache-2.0
+ */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
@@ -69,46 +73,50 @@ export class Project2Header extends DDDSuper(LitElement) {
         gap: 12px;
       }
 
-      .nav-link {
-        text-decoration: none;
+      button {
+        background: none;
+        border: none;
         color: #ffffff;
         padding: 6px 12px;
         border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
         transition: background 0.3s;
       }
 
-      .nav-link:hover,
-      .nav-link.active {
+      button:hover,
+      button.active {
         background-color: #81c784;
         color: #000000;
       }
     `];
   }
 
-  handleClick(e, path) {
-    e.preventDefault();
-    this.dispatchEvent(new CustomEvent("navigate", {
-      detail: { path },
-      bubbles: true,
-      composed: true
-    }));
+  navigate(path) {
+    this.dispatchEvent(
+      new CustomEvent("navigate", {
+        detail: { path },
+        bubbles: true,
+        composed: true
+      })
+    );
   }
 
   render() {
     return html`
       <div class="header-wrapper">
-        <div class="logo" @click=${(e) => this.handleClick(e, "/")}>
+        <div class="logo" @click=${() => this.navigate("/")}>
           Happy Volley FC
         </div>
+
         <nav>
           ${this.navItems.map(item => html`
-            <a
-              href="${item.path}"
-              class="nav-link ${this.currentRoute === item.path ? "active" : ""}"
-              @click=${(e) => this.handleClick(e, item.path)}
+            <button
+              class="${this.currentRoute === item.path ? "active" : ""}"
+              @click=${() => this.navigate(item.path)}
             >
               ${item.label}
-            </a>
+            </button>
           `)}
         </nav>
       </div>
