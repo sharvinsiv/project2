@@ -22,7 +22,7 @@ display: flex;
 flex-direction: column;
 min-height: 100vh;
 background: #FFFFFF;
-color: white;
+color: #1b1b1b;
 }
 
 main {
