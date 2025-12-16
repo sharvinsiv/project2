@@ -33,7 +33,7 @@ export class Project2Header extends DDDSuper(LitElement) {
     super.connectedCallback();
     this.loadMenu();
 
-    // keep active tab in sync when user uses browser back/forward
+   
     window.addEventListener("popstate", () => {
       this.currentRoute = window.location.pathname || "/";
     });
@@ -52,7 +52,7 @@ export class Project2Header extends DDDSuper(LitElement) {
     this.menuOpen = !this.menuOpen;
   }
 
-  /** ✅ FIXED: updates local route state */
+ 
   navigate(path) {
     this.menuOpen = false;
     this.currentRoute = path;
@@ -196,12 +196,12 @@ export class Project2Header extends DDDSuper(LitElement) {
 
           <img
             src="https://static.vecteezy.com/system/resources/thumbnails/012/995/442/small/football-championship-or-football-club-logo-vector.jpg"
-            alt="Happy Valley FC logo"
+            alt="Happy Volley FC logo"
             class="logo"
             loading="lazy"
           />
 
-          <span>Happy Valley FC</span>
+          <span>Happy Volley FC</span>
         </div>
 
         <nav>
